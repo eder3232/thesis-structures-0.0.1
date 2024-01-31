@@ -5,6 +5,8 @@ import { cn } from '@/lib/utils'
 import Navbar from '@/components/shared/navbar/navbar'
 import { siteConfig } from '@/shared/config/site'
 import { ThemeProvider } from '@/shared/providers/theme-provider'
+import { Provider } from 'jotai'
+import Footer from '@/components/shared/footer/footer'
 
 export const fontSans = FontSans({
   subsets: ['latin'],
@@ -35,17 +37,20 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <div className="bg-36">
-            <Navbar />
-            <div className="container">{children}</div>
-          </div>
-        </ThemeProvider>
+        <Provider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <div className="bg-36">
+              <Navbar />
+              <div className="container">{children}</div>
+            </div>
+            <Footer />
+          </ThemeProvider>
+        </Provider>
       </body>
     </html>
   )
