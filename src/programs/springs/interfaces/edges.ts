@@ -2,7 +2,7 @@ export interface IInputReactEdges {
   name: string
   from: string
   to: string
-  k: string
+  k: number
   id: string
 }
 

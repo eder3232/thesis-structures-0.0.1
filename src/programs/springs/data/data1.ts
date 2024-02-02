@@ -46,8 +46,8 @@ export const initialVerticesData: IInputReactVertices[] = [
 ]
 
 export const initialEdgesData: IInputReactEdges[] = [
-  { name: 'e1', from: 'v4', to: 'v2', k: '10', id: uuidv4() },
-  { name: 'e2', from: 'v2', to: 'v3', k: '4', id: uuidv4() },
-  { name: 'e3', from: 'v3', to: 'v5', k: '3', id: uuidv4() },
-  { name: 'e4', from: 'v2', to: 'v1', k: '8', id: uuidv4() },
+  { name: 'e1', from: 'v4', to: 'v2', k: 10, id: uuidv4() },
+  { name: 'e2', from: 'v2', to: 'v3', k: 4, id: uuidv4() },
+  { name: 'e3', from: 'v3', to: 'v5', k: 3, id: uuidv4() },
+  { name: 'e4', from: 'v2', to: 'v1', k: 8, id: uuidv4() },
 ]
