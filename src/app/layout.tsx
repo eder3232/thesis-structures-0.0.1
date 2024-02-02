@@ -33,7 +33,7 @@ export default function RootLayout({
     <html lang="es" suppressHydrationWarning>
       <body
         className={cn(
-          'min-h-screen bg-background font-sans antialiased',
+          'min-h-screen bg-background font-sans antialiased relative',
           fontSans.variable
         )}
       >
@@ -44,9 +44,9 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <div className="bg-36">
+            <div className="pb-36">
               <Navbar />
-              <div className="container pt-6">{children}</div>
+              <div className="container pt-6 mb-36">{children}</div>
             </div>
             <Footer />
           </ThemeProvider>

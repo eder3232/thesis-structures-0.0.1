@@ -22,7 +22,6 @@ import { Checkbox } from '@/components/ui/checkbox'
 const VertexTable = () => {
   const [vertices] = useAtom(atomGetReactVertices)
   const [areDofDefinedByUser] = useAtom(atomGetAreDofDefinedByUser)
-  const [, setAreDofDefinedByUser] = useAtom(atomSetSwitchAreDofDefinedByUser)
 
   return (
     <div className="max-w-full overflow-x-auto overflow-y-visible md:max-w-min">

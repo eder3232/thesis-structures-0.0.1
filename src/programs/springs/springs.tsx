@@ -5,7 +5,7 @@ import TypographyH2 from '@/components/typography/typography-h2'
 import TypographyH3 from '@/components/typography/typography-h3'
 import AreRestrictedOnTop from './components/areRestrictedsOnTop'
 import AreDofDefinedByUser from './components/areDofDefinedByUser'
-import EdgesTable from './components/edgesTable'
+import EdgesTable from './components/edgesTable/edgesTable'
 import VertexTable from './components/vertexTable'
 
 const Springs = () => {
@@ -25,12 +25,12 @@ const Springs = () => {
         <TypographyH3>Resortes:</TypographyH3>
 
         <EdgesTable />
-
-        <AreRestrictedOnTop />
       </div>
 
-      <div>
+      <div className="flex flex-col gap-4">
         <TypographyH2>Resultados: </TypographyH2>
+
+        <AreRestrictedOnTop />
       </div>
     </div>
   )
