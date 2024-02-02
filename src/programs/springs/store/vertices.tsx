@@ -7,4 +7,4 @@ import { initialVerticesData } from '../data/data1'
 
 const atomReactVertices = atom<IInputReactVertices[]>(initialVerticesData)
 
-const atomGetReactVertices = atom((get) => get(atomReactVertices))
+export const atomGetReactVertices = atom((get) => get(atomReactVertices))
