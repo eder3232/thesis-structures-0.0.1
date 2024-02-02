@@ -46,7 +46,7 @@ export default function RootLayout({
           >
             <div className="bg-36">
               <Navbar />
-              <div className="container">{children}</div>
+              <div className="container pt-6">{children}</div>
             </div>
             <Footer />
           </ThemeProvider>
