@@ -18,8 +18,8 @@ export const metadata: Metadata = {
   description: siteConfig.description,
   icons: [
     {
-      url: 'bocchi_right.ico',
-      href: 'bocchi_right.ico',
+      url: '/bocchi_right.ico',
+      href: '/bocchi_right.ico',
     },
   ],
 }
