@@ -7,6 +7,8 @@ import AreRestrictedOnTop from './components/areRestrictedsOnTop'
 import AreDofDefinedByUser from './components/areDofDefinedByUser'
 import EdgesTable from './components/edgesTable/edgesTable'
 import VerticesTable from './components/verticesTable'
+import VerticesErrors from './components/errors/verticesErrors'
+import EdgesErrors from './components/errors/edgesErrors'
 
 const Springs = () => {
   return (
@@ -25,6 +27,12 @@ const Springs = () => {
         <TypographyH3>Resortes:</TypographyH3>
 
         <EdgesTable />
+
+        <div className="flex flex-col gap-2">
+          <VerticesErrors />
+
+          <EdgesErrors />
+        </div>
       </div>
 
       <div className="flex flex-col gap-4">

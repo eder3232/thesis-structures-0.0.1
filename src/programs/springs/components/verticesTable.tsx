@@ -39,7 +39,11 @@ const VerticesTable = () => {
           <TableHeader>
             <TableRow className="[&>*]:text-center [&>*]:py-1 [&>.eder-head-text]:font-bold">
               <TableHead className="text-primary px-0">
-                <Button size="icon" variant="outline">
+                <Button
+                  size="icon"
+                  variant="outline"
+                  onClick={() => setVerticesAddNewRow(-1)}
+                >
                   <PlusCircle className="m-auto" />
                 </Button>
               </TableHead>
