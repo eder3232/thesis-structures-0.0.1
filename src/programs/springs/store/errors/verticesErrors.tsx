@@ -1,6 +1,7 @@
 import { atom } from 'jotai'
 import { IErrorVertices } from '../../interfaces/errors'
 import { atomGetVertices } from '../vertices'
+import { errorsCode } from './errorsCode'
 
 // const atomVerticesErrors = atom<IErrorVertices[]>([])
 
@@ -23,7 +24,7 @@ export const atomGetVerticesErrors = atom<IErrorVertices[]>((get) => {
 
     indexes.forEach((index) => {
       verticesErrors.push({
-        name: 'Nombres de vertices repetidos',
+        name: 'Nombres de nudos repetidos',
         message: `El nudo ${name} esta repetido`,
         typeError: 'vertices',
         errorCode: 'e100',
@@ -40,7 +41,7 @@ export const atomGetVerticesErrors = atom<IErrorVertices[]>((get) => {
         name: 'Fuerza con valor no numerico.',
         message: `El nudo ${vertex.name} tiene un valor de fuerza no numerico`,
         typeError: 'vertices',
-        errorCode: 'e101',
+        errorCode: 'e110',
         severity: 'error',
       })
     }
@@ -50,7 +51,7 @@ export const atomGetVerticesErrors = atom<IErrorVertices[]>((get) => {
         name: 'Desplazamiento con valor no numerico.',
         message: `El nudo ${vertex.name} tiene un valor de desplazamiento no numerico`,
         typeError: 'vertices',
-        errorCode: 'e102',
+        errorCode: 'e111',
         severity: 'error',
       })
     }

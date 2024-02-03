@@ -6,15 +6,15 @@ export const errorsCode = {
     errorCode: 100,
     severity: 'error',
   },
-  e101: {
+  e110: {
     name: 'Fuerza no numérica',
     message:
       'La fuerza aplicada sobre un nudo debe tener un valor numérico válido.',
     typeError: 'vertices',
-    errorCode: 101,
+    errorCode: 110,
     severity: 'error',
   },
-  e102: {
+  e111: {
     name: 'Desplazamiento no numérico',
     message:
       'El desplazamiento aplicado sobre un nudo debe tener un valor numérico válido.',
@@ -29,11 +29,25 @@ export const errorsCode = {
     errorCode: 200,
     severity: 'error',
   },
-  e201: {
+  e210: {
     name: 'Rigidez k no numérica',
     message: 'La rigidez de un resorte debe ser un valor numerico.',
     typeError: 'vertices',
-    errorCode: 201,
+    errorCode: 210,
+    severity: 'error',
+  },
+  e220: {
+    name: 'Nudo de resorte no existente',
+    message: 'El nudo de origin de un resorte no existe.',
+    typeError: 'edges',
+    errorCode: 220,
+    severity: 'error',
+  },
+  e221: {
+    name: 'Nudo de resorte no existente',
+    message: 'El nudo de destino de un resorte no existe.',
+    typeError: 'edges',
+    errorCode: 221,
     severity: 'error',
   },
 }
