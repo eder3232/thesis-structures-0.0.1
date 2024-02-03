@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { initialEdgesData } from '../data/data1'
 import { IInputReactEdges } from '../interfaces/edges'
 import { ChangeEvent } from 'react'
+import { atomGetVertices } from './vertices'
 
 type stringFields = 'name' | 'from' | 'to'
 
@@ -65,3 +66,31 @@ export const atomSetEdgesCombobox = atom(
     )
   }
 )
+
+export const atomSetEdgesAddNewRow = atom(null, (_get, set, index: number) => {
+  set(
+    atomEdges,
+    produce((draft) => {
+      const vertices = _get(atomGetVertices)
+
+      const fistItem = vertices[0]
+      const lastItem = vertices.at(-1)
+      draft.splice(index + 1, 0, {
+        id: uuidv4(),
+        name: `e${draft.length + 1}`,
+        from: fistItem?.name || '',
+        to: lastItem?.name || '',
+        k: 0,
+      })
+    })
+  )
+})
+
+export const atomSetEdgesDeleteRow = atom(null, (_get, set, index: number) => {
+  set(
+    atomEdges,
+    produce((draft) => {
+      draft.splice(index, 1)
+    })
+  )
+})

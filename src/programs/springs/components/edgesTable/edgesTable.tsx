@@ -11,13 +11,26 @@ import {
 import { cn } from '@/lib/utils'
 import { useAtom } from 'jotai'
 import { MinusCircle, PlusCircle } from 'lucide-react'
-import { atomGetEdges } from '../../store/edges'
+import {
+  atomGetEdges,
+  atomSetEdgesAddNewRow,
+  atomSetEdgesDeleteRow,
+  atomSetEdgesNumber,
+  atomSetEdgesString,
+} from '../../store/edges'
 import { atomGetVertices } from '../../store/vertices'
 import EdgesCombobox from './edgesCombobox'
+import { set } from 'date-fns'
 
 const EdgesTable = () => {
   const [edges] = useAtom(atomGetEdges)
   const [vertices] = useAtom(atomGetVertices)
+
+  const [, setEdgesString] = useAtom(atomSetEdgesString)
+  const [, setEdgesNumber] = useAtom(atomSetEdgesNumber)
+
+  const [, setEdgesAddNewRow] = useAtom(atomSetEdgesAddNewRow)
+  const [, setEdgesDeleteRow] = useAtom(atomSetEdgesDeleteRow)
 
   return (
     <div className="max-w-full overflow-x-auto overflow-y-visible md:max-w-min ">
@@ -26,14 +39,23 @@ const EdgesTable = () => {
           <TableHeader>
             <TableRow className="[&>*]:text-center [&>*]:py-1 [&>.eder-head-text]:font-bold">
               <TableHead className="text-primary px-0">
-                <Button size="icon" variant="outline">
+                <Button
+                  size="icon"
+                  variant="outline"
+                  onClick={() => setEdgesAddNewRow(-1)}
+                >
                   <PlusCircle className="m-auto" />
                 </Button>
               </TableHead>
 
-              <TableHead className="text-primary px-0">
-                <Button size="icon" variant="outline">
-                  <MinusCircle className="m-autp" />
+              <TableHead className="px-0">
+                <Button
+                  size="icon"
+                  variant="outline"
+                  disabled
+                  className="disabled:text-muted-foreground"
+                >
+                  <MinusCircle className="m-auto" />
                 </Button>
               </TableHead>
 
@@ -65,6 +87,7 @@ const EdgesTable = () => {
                     size="icon"
                     variant="outline"
                     className="text-primary"
+                    onClick={() => setEdgesAddNewRow(index)}
                   >
                     <PlusCircle className="m-auto" />
                   </Button>
@@ -75,6 +98,7 @@ const EdgesTable = () => {
                     size="icon"
                     variant="outline"
                     className="text-primary"
+                    onClick={() => setEdgesDeleteRow(index)}
                   >
                     <MinusCircle className="m-auto" />
                   </Button>
@@ -85,6 +109,13 @@ const EdgesTable = () => {
                     type="text"
                     defaultValue={edge.name}
                     className="w-32"
+                    onBlur={(e) =>
+                      setEdgesString({
+                        field: 'name',
+                        value: e.target.value,
+                        index,
+                      })
+                    }
                   />
                 </TableCell>
                 <TableCell>
@@ -105,7 +136,18 @@ const EdgesTable = () => {
                 </TableCell>
 
                 <TableCell className="text-left whitespace-nowrap">
-                  <Input type="text" defaultValue={edge.k} className="w-32" />
+                  <Input
+                    type="text"
+                    defaultValue={edge.k}
+                    className="w-32"
+                    onBlur={(e) =>
+                      setEdgesNumber({
+                        field: 'k',
+                        value: e.target.valueAsNumber,
+                        index,
+                      })
+                    }
+                  />
                 </TableCell>
               </TableRow>
             ))}
