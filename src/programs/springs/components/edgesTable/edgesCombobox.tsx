@@ -1,5 +1,5 @@
 import { useAtom } from 'jotai'
-import { atomGetReactVertices } from '../../store/vertices'
+import { atomGetVertices } from '../../store/vertices'
 import { useState } from 'react'
 import { Popover, PopoverTrigger } from '@/components/ui/popover'
 import { Button } from '@/components/ui/button'
@@ -12,7 +12,7 @@ import {
   CommandInput,
   CommandItem,
 } from '@/components/ui/command'
-import { atomSetReactEdgesCombobox } from '../../store/edges'
+import { atomSetEdgesCombobox } from '../../store/edges'
 
 const frameworks = [
   {
@@ -48,7 +48,7 @@ const EdgesCombobox = ({ value, collection, field, index }: Props) => {
   const [open, setOpen] = useState(false)
   // const [value, setValue] = useState('')
   // const [vertices] = useAtom(atomGetReactVertices)
-  const [, setReactEdgesCombobox] = useAtom(atomSetReactEdgesCombobox)
+  const [, setReactEdgesCombobox] = useAtom(atomSetEdgesCombobox)
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>

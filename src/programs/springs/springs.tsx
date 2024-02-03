@@ -6,7 +6,7 @@ import TypographyH3 from '@/components/typography/typography-h3'
 import AreRestrictedOnTop from './components/areRestrictedsOnTop'
 import AreDofDefinedByUser from './components/areDofDefinedByUser'
 import EdgesTable from './components/edgesTable/edgesTable'
-import VertexTable from './components/vertexTable'
+import VerticesTable from './components/verticesTable'
 
 const Springs = () => {
   return (
@@ -20,7 +20,7 @@ const Springs = () => {
 
         <AreDofDefinedByUser />
 
-        <VertexTable />
+        <VerticesTable />
 
         <TypographyH3>Resortes:</TypographyH3>
 

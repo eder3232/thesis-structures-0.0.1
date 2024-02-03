@@ -9,20 +9,20 @@ type stringFields = 'name' | 'from' | 'to'
 
 type numberFields = 'k'
 
-const atomReactEdges = atom<IInputReactEdges[]>(initialEdgesData)
+const atomEdges = atom<IInputReactEdges[]>(initialEdgesData)
 
-export const atomGetReactEdges = atom((get) => get(atomReactEdges))
+export const atomGetEdges = atom((get) => get(atomEdges))
 
 interface ISetReactEdgesString {
   field: stringFields
   value: string
   index: number
 }
-export const atomSetReactEdgesString = atom(
+export const atomSetEdgesString = atom(
   null,
   (_get, set, { field, value, index }: ISetReactEdgesString) => {
     set(
-      atomReactEdges,
+      atomEdges,
       produce((draft) => {
         draft[index][field] = value
       })
@@ -36,11 +36,11 @@ interface ISetReactEdgesNumber {
   index: number
 }
 
-export const atomSetReactEdgesNumber = atom(
+export const atomSetEdgesNumber = atom(
   null,
   (_get, set, { field, value, index }: ISetReactEdgesNumber) => {
     set(
-      atomReactEdges,
+      atomEdges,
       produce((draft) => {
         draft[index][field] = value
       })
@@ -54,11 +54,11 @@ interface ISetReactEdgesCombobox {
   index: number
 }
 
-export const atomSetReactEdgesCombobox = atom(
+export const atomSetEdgesCombobox = atom(
   null,
   (_get, set, { field, value, index }: ISetReactEdgesCombobox) => {
     set(
-      atomReactEdges,
+      atomEdges,
       produce((draft) => {
         draft[index][field] = value
       })

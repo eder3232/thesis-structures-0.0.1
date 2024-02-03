@@ -1,3 +1,5 @@
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import {
   Table,
   TableBody,
@@ -6,19 +8,16 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { MinusCircle, PlusCircle } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { Input } from '@/components/ui/input'
-import { Checkbox } from '@/components/ui/checkbox'
-import { atomGetReactEdges } from '../../store/edges'
 import { useAtom } from 'jotai'
+import { MinusCircle, PlusCircle } from 'lucide-react'
+import { atomGetEdges } from '../../store/edges'
+import { atomGetVertices } from '../../store/vertices'
 import EdgesCombobox from './edgesCombobox'
-import { atomGetReactVertices } from '../../store/vertices'
 
 const EdgesTable = () => {
-  const [edges] = useAtom(atomGetReactEdges)
-  const [vertices] = useAtom(atomGetReactVertices)
+  const [edges] = useAtom(atomGetEdges)
+  const [vertices] = useAtom(atomGetVertices)
 
   return (
     <div className="max-w-full overflow-x-auto overflow-y-visible md:max-w-min ">
