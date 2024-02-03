@@ -1,10 +1,15 @@
 import { useAtom } from 'jotai'
-import { atomGetReactVertices } from '../store/vertices'
+import { atomGetAreDofDefinedByUser } from '../store/areDofDefinedByUser'
 import {
-  atomGetAreDofDefinedByUser,
-  atomSetSwitchAreDofDefinedByUser,
-} from '../store/areDofDefinedByUser'
+  atomGetVertices,
+  atomSetVerticesBoolean,
+  atomSetVerticesNumber,
+  atomSetVerticesString,
+} from '../store/vertices'
 
+import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Input } from '@/components/ui/input'
 import {
   Table,
   TableBody,
@@ -13,15 +18,15 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { MinusCircle, PlusCircle } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { Input } from '@/components/ui/input'
-import { Checkbox } from '@/components/ui/checkbox'
+import { MinusCircle, PlusCircle } from 'lucide-react'
 
-const VertexTable = () => {
-  const [vertices] = useAtom(atomGetReactVertices)
+const VerticesTable = () => {
+  const [vertices] = useAtom(atomGetVertices)
   const [areDofDefinedByUser] = useAtom(atomGetAreDofDefinedByUser)
+  const [, setVerticesString] = useAtom(atomSetVerticesString)
+  const [, setVerticesNumber] = useAtom(atomSetVerticesNumber)
+  const [, setVerticesBoolean] = useAtom(atomSetVerticesBoolean)
 
   return (
     <div className="max-w-full overflow-x-auto overflow-y-visible md:max-w-min">
@@ -91,6 +96,13 @@ const VertexTable = () => {
                     type="text"
                     defaultValue={vertex.name}
                     className="w-32"
+                    onBlur={(e) =>
+                      setVerticesString({
+                        field: 'name',
+                        value: e.target.value,
+                        index,
+                      })
+                    }
                   />
                 </TableCell>
 
@@ -99,6 +111,13 @@ const VertexTable = () => {
                     type="text"
                     defaultValue={vertex.force}
                     className="w-32"
+                    onBlur={(e) =>
+                      setVerticesNumber({
+                        field: 'force',
+                        value: e.target.valueAsNumber,
+                        index,
+                      })
+                    }
                   />
                 </TableCell>
 
@@ -107,11 +126,27 @@ const VertexTable = () => {
                     type="text"
                     defaultValue={vertex.displacement}
                     className="w-32"
+                    onBlur={(e) =>
+                      setVerticesNumber({
+                        field: 'displacement',
+                        value: e.target.valueAsNumber,
+                        index,
+                      })
+                    }
                   />
                 </TableCell>
 
                 <TableCell className="text-center">
-                  <Checkbox checked={vertex.isRestricted} />
+                  <Checkbox
+                    checked={vertex.isRestricted}
+                    onCheckedChange={() =>
+                      setVerticesBoolean({
+                        field: 'isRestricted',
+                        value: !vertex.isRestricted,
+                        index,
+                      })
+                    }
+                  />
                 </TableCell>
 
                 {areDofDefinedByUser && (
@@ -120,6 +155,13 @@ const VertexTable = () => {
                       type="text"
                       defaultValue={vertex.userDOF}
                       className="w-32"
+                      onBlur={(e) =>
+                        setVerticesNumber({
+                          field: 'userDOF',
+                          value: e.target.valueAsNumber,
+                          index,
+                        })
+                      }
                     />
                   </TableCell>
                 )}
@@ -132,4 +174,4 @@ const VertexTable = () => {
   )
 }
 
-export default VertexTable
+export default VerticesTable

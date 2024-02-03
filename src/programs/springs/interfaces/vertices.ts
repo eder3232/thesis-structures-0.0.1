@@ -1,9 +1,9 @@
 export interface IInputReactVertices {
   name: string
-  force: string
-  displacement: string
+  force: number
+  displacement: number
   isRestricted: boolean
-  userDOF: string
+  userDOF: number
   id: string
 }
 
