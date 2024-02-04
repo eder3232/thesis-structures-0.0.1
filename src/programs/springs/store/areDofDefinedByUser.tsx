@@ -6,8 +6,8 @@ export const atomGetAreDofDefinedByUser = atom((get) =>
   get(atomAreDofDefinedByUser)
 )
 
-export const atomSetSwitchAreDofDefinedByUser = atom(null, (get, set) => {
-  const currentValue = get(atomAreDofDefinedByUser)
+export const atomSetSwitchAreDofDefinedByUser = atom(null, (_get, set) => {
+  const currentValue = _get(atomAreDofDefinedByUser)
 
   set(atomAreDofDefinedByUser, !currentValue)
 })

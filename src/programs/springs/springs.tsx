@@ -9,6 +9,7 @@ import EdgesTable from './components/edgesTable/edgesTable'
 import VerticesTable from './components/verticesTable'
 import VerticesErrors from './components/errors/verticesErrors'
 import EdgesErrors from './components/errors/edgesErrors'
+import Results from './components/results/results'
 
 const Springs = () => {
   return (
@@ -39,6 +40,8 @@ const Springs = () => {
         <TypographyH2>Resultados: </TypographyH2>
 
         <AreRestrictedOnTop />
+
+        <Results />
       </div>
     </div>
   )
