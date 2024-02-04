@@ -125,7 +125,7 @@ const VerticesTable = () => {
 
                 <TableCell className="text-left whitespace-nowrap">
                   <Input
-                    type="text"
+                    type="number"
                     defaultValue={vertex.force}
                     className="w-32"
                     onBlur={(e) =>
@@ -140,7 +140,7 @@ const VerticesTable = () => {
 
                 <TableCell className="text-left whitespace-nowrap">
                   <Input
-                    type="text"
+                    type="number"
                     defaultValue={vertex.displacement}
                     className="w-32"
                     onBlur={(e) =>
