@@ -1,27 +1,29 @@
 import { IErrorsCode } from '../store/errors/errorsCode'
 
 type ISeverity = 'error' | 'warning' | 'info'
-type ITypeError = 'vertices' | 'edges'
+type ITypeError = 'vertices' | 'edges' | 'logic'
 
-export interface IErrorVertices {
+interface IErrorBase {
   name: string
   message: string
   // stack: string
+  errorCode: IErrorsCode
+  severity: ISeverity
+}
+
+export interface IErrorVertices extends IErrorBase {
   typeError: 'vertices'
-  errorCode: IErrorsCode
-  severity: ISeverity
 }
 
-export interface IErrorEdges {
-  name: string
-  message: string
-  // stack: string
+export interface IErrorEdges extends IErrorBase {
   typeError: 'edges'
-  errorCode: IErrorsCode
-  severity: ISeverity
 }
 
-export interface IError {
+export interface IErrorLogic extends IErrorBase {
+  typeError: 'logic'
+}
+
+export interface IErrors {
   name: string
   message: string
   // stack: string

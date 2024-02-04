@@ -50,5 +50,27 @@ export const errorsCode = {
     errorCode: 221,
     severity: 'error',
   },
+  e300: {
+    name: 'Error en la lógica.',
+    message: 'Error en la lógica al agregar un nudo',
+    typeError: 'logic',
+    errorCode: 300,
+    severity: 'error',
+  },
+  e301: {
+    name: 'Error en la lógica.',
+    message: 'Error en la lógica al agregar un resorte',
+    typeError: 'logic',
+    errorCode: 301,
+    severity: 'error',
+  },
+  e302: {
+    name: 'Matriz inversa irresoluble.',
+    message: 'Error al intentar obtener la inversa de la matriz kuu',
+    typeError: 'logic',
+    errorCode: 302,
+    severity: 'error',
+  },
 }
+
 export type IErrorsCode = keyof typeof errorsCode
