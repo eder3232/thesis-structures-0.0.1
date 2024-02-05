@@ -10,7 +10,7 @@ interface Props {
 }
 
 const GlobalByStep = ({ kGlobalHistory }: Props) => {
-  const [current, setCurrent] = useState<number>(kGlobalHistory.length - 1)
+  const [current, setCurrent] = useState<number>(0)
   return (
     <div>
       {/* Stepper */}
