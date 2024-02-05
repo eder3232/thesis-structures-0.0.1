@@ -5,6 +5,9 @@ import { v4 as uuidv4 } from 'uuid'
 import { IInputReactVertices } from '../interfaces/vertices'
 import { initialVerticesData } from '../data/data1'
 import { get } from 'http'
+import { atomGetAreDofDefinedByUser } from './areDofDefinedByUser'
+import AreRestrictedOnTop from '../components/areRestrictedsOnTop'
+import { number } from 'mathjs'
 
 const atomVertices = atom<IInputReactVertices[]>(initialVerticesData)
 
@@ -102,6 +105,39 @@ export const atomSetVerticesDeleteRow = atom(
       atomVertices,
       produce((draft) => {
         draft.splice(index, 1)
+      })
+    )
+  }
+)
+
+export const atomSetVerticesResetDofs = atom(
+  null,
+  (_get, set, areRestrictedOnTop: boolean) => {
+    let restrictedCounter = 0
+    let unrestrictedCounter = 0
+
+    const numberOfRestricted = _get(atomGetVertices).filter(
+      (vertex) => vertex.isRestricted
+    ).length
+
+    const numberOfUnrestricted = _get(atomGetVertices).filter(
+      (vertex) => !vertex.isRestricted
+    ).length
+
+    set(
+      atomVertices,
+      produce((draft) => {
+        if (areRestrictedOnTop) {
+          draft.forEach((vertex) => {
+            if (vertex.isRestricted) {
+              vertex.userDOF = restrictedCounter + 1
+              restrictedCounter++
+            } else {
+              vertex.userDOF = numberOfRestricted + unrestrictedCounter + 1
+              unrestrictedCounter++
+            }
+          })
+        }
       })
     )
   }
