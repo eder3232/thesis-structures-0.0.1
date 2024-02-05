@@ -8,9 +8,7 @@ interface Props {
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
@@ -72,8 +70,7 @@ const TwoDimensionalArray = ({ arr, name, decimals = 2 }: Props) => {
                   <SelectContent>
                     {decimalsArray.map((d) => (
                       <SelectItem key={d.id} value={d.name}>
-                        {/* {d.name} */}
-                        .00
+                        {d.name}
                       </SelectItem>
                     ))}
                   </SelectContent>

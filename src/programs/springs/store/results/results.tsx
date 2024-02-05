@@ -195,6 +195,16 @@ export const atomGetResults = atom<IResponse>((get) => {
   response.results.k.kuu = kuu
 
   const {
+    global: fGlobal,
+    restricted: fRestricted,
+    unrestricted: fUnrestricted,
+  } = spring.buildForces()
+
+  response.results.f.global = fGlobal
+  response.results.f.restricted = fRestricted
+  response.results.f.unrestricted = fUnrestricted
+
+  const {
     global: uGlobal,
     restricted: uRestricted,
     unrestricted: uUnrestricted,
