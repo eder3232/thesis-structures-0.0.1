@@ -1,9 +1,7 @@
-import { useAtom } from 'jotai'
-import React from 'react'
-import { atomGetResults } from '../../store/results/results'
-import TypographyH2 from '@/components/typography/typography-h2'
 import TypographyH3 from '@/components/typography/typography-h3'
+import { useAtom } from 'jotai'
 import { atomGetAreDofDefinedByUser } from '../../store/areDofDefinedByUser'
+import { atomGetResults } from '../../store/results/results'
 
 import 'katex/dist/katex.min.css'
 import { InlineMath } from 'react-katex'
@@ -11,19 +9,17 @@ import { InlineMath } from 'react-katex'
 import { Terminal } from 'lucide-react'
 
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
-import TypographyP from '@/components/typography/typography-p'
 
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import Locals from './locals'
 import GlobalByStep from './globalByStep'
+import Locals from './locals'
 
 const Results = () => {
   const [response] = useAtom(atomGetResults)

@@ -72,7 +72,8 @@ const TwoDimensionalArray = ({ arr, name, decimals = 2 }: Props) => {
                   <SelectContent>
                     {decimalsArray.map((d) => (
                       <SelectItem key={d.id} value={d.name}>
-                        {d.name}
+                        {/* {d.name} */}
+                        .00
                       </SelectItem>
                     ))}
                   </SelectContent>

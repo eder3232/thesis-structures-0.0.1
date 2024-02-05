@@ -1,10 +1,4 @@
-import { useAtom } from 'jotai'
-import { atomGetVertices } from '../../store/vertices'
-import { useState } from 'react'
-import { Popover, PopoverTrigger } from '@/components/ui/popover'
 import { Button } from '@/components/ui/button'
-import { ChevronsUpDown } from 'lucide-react'
-import { PopoverContent } from '@radix-ui/react-popover'
 import {
   Command,
   CommandEmpty,
@@ -12,6 +6,11 @@ import {
   CommandInput,
   CommandItem,
 } from '@/components/ui/command'
+import { Popover, PopoverTrigger } from '@/components/ui/popover'
+import { PopoverContent } from '@radix-ui/react-popover'
+import { useAtom } from 'jotai'
+import { ChevronsUpDown } from 'lucide-react'
+import { useState } from 'react'
 import { atomSetEdgesCombobox } from '../../store/edges'
 
 const frameworks = [

@@ -11,3 +11,5 @@ export const atomSetSwitchAreDofDefinedByUser = atom(null, (_get, set) => {
 
   set(atomAreDofDefinedByUser, !currentValue)
 })
+
+//TODO: IMPLEMENT THE UPDATE FUNCTION, WHEN IT CHANGE, IT SHOULD UPDATE THE VERTICES DOFS

@@ -20,7 +20,6 @@ import {
 } from '../../store/edges'
 import { atomGetVertices } from '../../store/vertices'
 import EdgesCombobox from './edgesCombobox'
-import { set } from 'date-fns'
 
 const EdgesTable = () => {
   const [edges] = useAtom(atomGetEdges)
