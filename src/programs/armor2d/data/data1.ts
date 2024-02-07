@@ -1,6 +1,8 @@
 import { v4 as uuidv4 } from 'uuid'
+import { IInputReactVertices, IInputVertices } from '../interfaces/vertices'
+import { IInputReactEdges } from '../interfaces/edges'
 
-export const initialVerticesData = [
+export const initialVerticesParsedData: IInputVertices[] = [
   {
     name: 'v1',
     coordinates: { x: 0, z: 0 },
@@ -43,7 +45,7 @@ export const initialVerticesData = [
   },
 ]
 
-export const initialEdgesData = [
+export const initialEdgesData: IInputReactEdges[] = [
   {
     name: 'e1',
     from: 'v1',
@@ -90,6 +92,75 @@ export const initialEdgesData = [
     to: 'v3',
     area: 10 * 10 ** -4,
     elasticity: 2 * 10 ** 7,
+    id: uuidv4(),
+  },
+]
+
+//-------------------------------------------
+
+export const initialVerticesData: IInputReactVertices[] = [
+  {
+    name: 'v1',
+    coordinateX: 0,
+    coordinateZ: 0,
+    forceX: 0,
+    forceZ: 0,
+    displacementX: 0,
+    displacementZ: 0,
+    isRestrictedX: true,
+    isRestrictedZ: true,
+    springX: 0,
+    springZ: 0,
+    userDOFX: 7,
+    userDOFZ: 8,
+    id: uuidv4(),
+  },
+  {
+    name: 'v2',
+    coordinateX: 3,
+    coordinateZ: 0,
+    forceX: 0,
+    forceZ: 0,
+    displacementX: 0,
+    displacementZ: 0,
+    isRestrictedX: true,
+    isRestrictedZ: true,
+    springX: 0,
+    springZ: 0,
+    userDOFX: 5,
+    userDOFZ: 6,
+    id: uuidv4(),
+  },
+  {
+    name: 'v3',
+    coordinateX: 0,
+    coordinateZ: 4,
+    forceX: 4.8,
+    forceZ: -6.4,
+    displacementX: 0,
+    displacementZ: 0,
+    isRestrictedX: false,
+    isRestrictedZ: false,
+    springX: 0,
+    springZ: 0,
+    userDOFX: 3,
+    userDOFZ: 4,
+    id: uuidv4(),
+  },
+  {
+    name: 'v4',
+    coordinateX: 3,
+    coordinateZ: 4,
+    forceX: 0,
+    forceZ: -6,
+    displacementX: 0,
+    displacementZ: 0,
+    isRestrictedX: false,
+    isRestrictedZ: false,
+    springX: 0,
+    springZ: 0,
+    userDOFX: 1,
+    userDOFZ: 2,
     id: uuidv4(),
   },
 ]

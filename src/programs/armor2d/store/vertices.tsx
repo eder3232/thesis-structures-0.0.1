@@ -1,19 +1,33 @@
 import { atom } from 'jotai'
-
+import { IInputReactVertices } from '../interfaces/vertices'
+import { initialVerticesData } from '../data/data1'
+import { number } from 'mathjs'
 import { produce } from 'immer'
 import { v4 as uuidv4 } from 'uuid'
-import { initialVerticesData } from '../data/data1'
-import { IInputReactVertices } from '../interfaces/vertices'
 
 const atomVertices = atom<IInputReactVertices[]>(initialVerticesData)
 
 export const atomGetVertices = atom((get) => get(atomVertices))
 
+type IAxis = 'x' | 'z'
+
+const axis: IAxis[] = ['x', 'z']
+
 type stringFields = 'name'
 
-type numberFields = 'force' | 'displacement' | 'userDOF'
+type numberFields =
+  | 'coordinateX'
+  | 'coordinateZ'
+  | 'forceX'
+  | 'forceZ'
+  | 'displacementX'
+  | 'displacementZ'
+  | 'springX'
+  | 'springZ'
+  | 'userDOFX'
+  | 'userDOFZ'
 
-type booleanFields = 'isRestricted'
+type booleanFields = 'isRestrictedX' | 'isRestrictedZ'
 
 export const atomSetVerticesString = atom(
   null,
@@ -84,10 +98,18 @@ export const atomSetVerticesAddNewRow = atom(
         draft.splice(index + 1, 0, {
           id: uuidv4(),
           name: `v${draft.length + 1}`,
-          force: 0,
-          displacement: 0,
-          isRestricted: false,
-          userDOF: draft.length + 1,
+          coordinateX: 0,
+          coordinateZ: 0,
+          forceX: 0,
+          forceZ: 0,
+          displacementX: 0,
+          displacementZ: 0,
+          isRestrictedX: false,
+          isRestrictedZ: false,
+          springX: 0,
+          springZ: 0,
+          userDOFX: draft.length * axis.length + 1,
+          userDOFZ: draft.length * axis.length + 2,
         })
       })
     )
@@ -108,16 +130,16 @@ export const atomSetVerticesDeleteRow = atom(
 
 export const atomSetVerticesResetDofs = atom(
   null,
-  (_get, set, areRestrictedOnTop: boolean) => {
+  (_get, set, { areRestrictedOnTop }: { areRestrictedOnTop: boolean }) => {
     let restrictedCounter = 0
     let unrestrictedCounter = 0
 
     const numberOfRestricted = _get(atomGetVertices).filter(
-      (vertex) => vertex.isRestricted
+      (vertex) => vertex.isRestrictedX || vertex.isRestrictedZ
     ).length
 
     const numberOfUnrestricted = _get(atomGetVertices).filter(
-      (vertex) => !vertex.isRestricted
+      (vertex) => !vertex.isRestrictedX && !vertex.isRestrictedZ
     ).length
 
     set(
@@ -125,21 +147,25 @@ export const atomSetVerticesResetDofs = atom(
       produce((draft) => {
         if (areRestrictedOnTop) {
           draft.forEach((vertex) => {
-            if (vertex.isRestricted) {
-              vertex.userDOF = restrictedCounter + 1
+            if (vertex.isRestrictedX || vertex.isRestrictedZ) {
+              vertex.userDOFX = restrictedCounter + 1
+              vertex.userDOFZ = restrictedCounter + 1
               restrictedCounter++
             } else {
-              vertex.userDOF = numberOfRestricted + unrestrictedCounter + 1
+              vertex.userDOFX = numberOfRestricted + unrestrictedCounter + 1
+              vertex.userDOFZ = numberOfRestricted + unrestrictedCounter + 2
               unrestrictedCounter++
             }
           })
         } else {
           draft.forEach((vertex) => {
-            if (vertex.isRestricted) {
-              vertex.userDOF = numberOfUnrestricted + restrictedCounter + 1
+            if (vertex.isRestrictedX || vertex.isRestrictedZ) {
+              vertex.userDOFX = numberOfUnrestricted + restrictedCounter + 1
+              vertex.userDOFZ = numberOfUnrestricted + restrictedCounter + 1
               restrictedCounter++
             } else {
-              vertex.userDOF = unrestrictedCounter + 1
+              vertex.userDOFX = unrestrictedCounter + 1
+              vertex.userDOFZ = unrestrictedCounter + 1
               unrestrictedCounter++
             }
           })
