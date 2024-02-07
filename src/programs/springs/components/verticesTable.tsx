@@ -3,7 +3,7 @@ import { atomGetAreDofDefinedByUser } from '../store/areDofDefinedByUser'
 import {
   atomGetVertices,
   atomSetVerticesAddNewRow,
-  atomSetVerticesBoolean,
+  atomSetVerticesSwitchRestricted,
   atomSetVerticesDeleteRow,
   atomSetVerticesNumber,
   atomSetVerticesString,
@@ -28,7 +28,7 @@ const VerticesTable = () => {
   const [areDofDefinedByUser] = useAtom(atomGetAreDofDefinedByUser)
   const [, setVerticesString] = useAtom(atomSetVerticesString)
   const [, setVerticesNumber] = useAtom(atomSetVerticesNumber)
-  const [, setVerticesBoolean] = useAtom(atomSetVerticesBoolean)
+  const [, setVerticesBoolean] = useAtom(atomSetVerticesSwitchRestricted)
   const [, setVerticesAddNewRow] = useAtom(atomSetVerticesAddNewRow)
   const [, setVerticesDeleteRow] = useAtom(atomSetVerticesDeleteRow)
 
@@ -135,6 +135,7 @@ const VerticesTable = () => {
                         index,
                       })
                     }
+                    disabled={vertex.isRestricted}
                   />
                 </TableCell>
 
@@ -150,6 +151,7 @@ const VerticesTable = () => {
                         index,
                       })
                     }
+                    disabled={!vertex.isRestricted}
                   />
                 </TableCell>
 
@@ -158,7 +160,6 @@ const VerticesTable = () => {
                     checked={vertex.isRestricted}
                     onCheckedChange={() =>
                       setVerticesBoolean({
-                        field: 'isRestricted',
                         value: !vertex.isRestricted,
                         index,
                       })
@@ -186,6 +187,16 @@ const VerticesTable = () => {
             ))}
           </TableBody>
         </Table>
+
+        {/* <pre>
+          {JSON.stringify(
+            {
+              vertices,
+            },
+            null,
+            2
+          )}
+        </pre> */}
       </div>
     </div>
   )

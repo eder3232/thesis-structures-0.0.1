@@ -10,8 +10,11 @@ import VerticesTable from './components/verticesTable'
 import VerticesErrors from './components/errors/verticesErrors'
 import EdgesErrors from './components/errors/edgesErrors'
 import Results from './components/results/results'
+import { useAtom } from 'jotai'
+import { atomGetErrors } from './store/errors/errors'
 
 const Springs = () => {
+  const [errors] = useAtom(atomGetErrors)
   return (
     <div className="flex flex-col gap-4">
       <TypographyH1>Resortes</TypographyH1>
@@ -41,7 +44,7 @@ const Springs = () => {
 
         <AreRestrictedOnTop />
 
-        <Results />
+        {errors.length === 0 && <Results />}
       </div>
     </div>
   )

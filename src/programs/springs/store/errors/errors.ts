@@ -8,3 +8,5 @@ const atomErrors = atom<IErrors[]>((get) => {
   const verticesErrors = get(atomGetVerticesErrors)
   return [...structuredClone(edgesErrors), ...structuredClone(verticesErrors)]
 })
+
+export const atomGetErrors = atom((get) => get(atomErrors))

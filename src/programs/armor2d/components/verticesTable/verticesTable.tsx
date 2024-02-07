@@ -22,6 +22,7 @@ import {
 } from '@/components/ui/table'
 import { cn } from '@/lib/utils'
 import { MinusCircle, PlusCircle } from 'lucide-react'
+import SpecialConditions from './specialConditions'
 
 const VerticesTable = () => {
   const [vertices] = useAtom(atomGetVertices)
@@ -55,14 +56,14 @@ const VerticesTable = () => {
               <TableHead className="eder-head-text" colSpan={2}>
                 Restringido
               </TableHead>
+              <TableHead className="eder-head-text" rowSpan={2}>
+                Condiciones especiales
+              </TableHead>
               {areDofDefinedByUser && (
                 <TableHead className="eder-head-text" colSpan={2}>
                   Grado de libertad
                 </TableHead>
               )}
-              <TableHead className="eder-head-text" rowSpan={2}>
-                Condiciones especiales
-              </TableHead>
             </TableRow>
             <TableRow className="[&>*]:text-center [&>*]:py-1 [&>.eder-head-text]:font-bold">
               <TableHead className="text-primary px-0">
@@ -268,6 +269,10 @@ const VerticesTable = () => {
                       })
                     }
                   />
+                </TableCell>
+
+                <TableCell>
+                  <SpecialConditions />
                 </TableCell>
 
                 {areDofDefinedByUser && (
