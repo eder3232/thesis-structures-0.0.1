@@ -4,6 +4,8 @@ import TypographyH1 from '@/components/typography/typography-h1'
 import TypographyH2 from '@/components/typography/typography-h2'
 import VerticesTable from './components/verticesTable/verticesTable'
 import AreDofDefinedByUser from './components/areDofDefinedByUser'
+import TypographyH3 from '@/components/typography/typography-h3'
+import EdgesTable from './components/edgesTable/edgesTable'
 
 const Armor2D = () => {
   return (
@@ -17,6 +19,10 @@ const Armor2D = () => {
       <TypographyH2>Nudos</TypographyH2>
 
       <VerticesTable />
+
+      <TypographyH3>Barras:</TypographyH3>
+
+      <EdgesTable />
     </div>
   )
 }
