@@ -1,7 +1,7 @@
 import { atom } from 'jotai'
 import { IInputReactVertices } from '../interfaces/vertices'
 import { initialVerticesData } from '../data/data1'
-import { number } from 'mathjs'
+import { i, number } from 'mathjs'
 import { produce } from 'immer'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -84,6 +84,37 @@ export const atomSetVerticesBoolean = atom(
       atomVertices,
       produce((draft) => {
         draft[index][field] = value
+      })
+    )
+  }
+)
+
+export const atomSetVerticesSwitchRestricted = atom(
+  null,
+  (_get, set, { index, axis }: { index: number; axis: 'x' | 'z' }) => {
+    set(
+      atomVertices,
+      produce((draft) => {
+        if (axis === 'x') {
+          if (draft[index].isRestrictedX === false) {
+            draft[index]['forceX'] = 0
+          }
+          if (draft[index].isRestrictedZ === false) {
+            draft[index]['displacementZ'] = 0
+          }
+
+          draft[index]['isRestrictedX'] = !draft[index].isRestrictedX
+        }
+
+        if (axis === 'z') {
+          if (draft[index].isRestrictedZ === false) {
+            draft[index]['forceZ'] = 0
+          }
+          if (draft[index].isRestrictedX === false) {
+            draft[index]['displacementZ'] = 0
+          }
+          draft[index]['isRestrictedZ'] = !draft[index].isRestrictedZ
+        }
       })
     )
   }
