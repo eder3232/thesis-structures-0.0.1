@@ -78,29 +78,33 @@ export const atomSetVerticesBoolean = atom(
 export const atomSetVerticesSwitchRestricted = atom(
   null,
   (_get, set, { value, index }: { value: boolean; index: number }) => {
-    // set(
-    //   atomVertices,
-    //   produce((draft) => {
-    //     if (draft[index]['isRestricted'] === false) {
-    //       draft[index]['force'] = 0
-    //     }
-    //     if (draft[index]['isRestricted'] === true) {
-    //       draft[index]['displacement'] = 0
-    //     }
-    //     draft[index]['isRestricted'] = !draft[index]['isRestricted']
-    //   })
-    // )
+    set(
+      atomVertices,
+      produce((draft) => {
+        if (draft[index]['isRestricted'] === false) {
+          draft[index]['force'] = 0
+        }
+        if (draft[index]['isRestricted'] === true) {
+          draft[index]['displacement'] = 0
+        }
+        draft[index]['isRestricted'] = !draft[index]['isRestricted']
+      })
+    )
 
     //Make the same as the previous code but without using produce
-    const draft = structuredClone(_get(atomVertices))
-    if (draft[index]['isRestricted'] === false) {
-      draft[index]['force'] = 0
-    }
-    if (draft[index]['isRestricted'] === true) {
-      draft[index]['displacement'] = 0
-    }
-    draft[index]['isRestricted'] = !draft[index]['isRestricted']
-    set(atomVertices, draft)
+    // const draft = structuredClone(_get(atomVertices))
+    // if (draft[index]['isRestricted'] === false) {
+    //   draft[index]['force'] = 0
+    // }
+    // if (draft[index]['isRestricted'] === true) {
+    //   draft[index]['displacement'] = 0
+    // }
+    // draft[index]['isRestricted'] = !draft[index]['isRestricted']
+    // console.log({
+    //   old: _get(atomVertices),
+    //   new: draft,
+    // })
+    // set(atomVertices, draft)
   }
 )
 

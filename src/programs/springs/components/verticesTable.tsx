@@ -22,6 +22,7 @@ import {
 } from '@/components/ui/table'
 import { cn } from '@/lib/utils'
 import { MinusCircle, PlusCircle } from 'lucide-react'
+import EderInput from '@/components/shared/utils/ederInput'
 
 const VerticesTable = () => {
   const [vertices] = useAtom(atomGetVertices)
@@ -124,23 +125,39 @@ const VerticesTable = () => {
                 </TableCell>
 
                 <TableCell className="text-left whitespace-nowrap">
-                  <Input
-                    type="number"
-                    defaultValue={vertex.force}
+                  {/* <Input
+                    type="text"
+                    value={vertex.force}
                     className="w-32"
-                    onBlur={(e) =>
-                      setVerticesNumber({
-                        field: 'force',
-                        value: e.target.valueAsNumber,
-                        index,
-                      })
+                    // onBlur={(e) =>
+                    //   setVerticesNumber({
+                    //     field: 'force',
+                    //     value: e.target.valueAsNumber,
+                    //     index,
+                    //   })
+                    // }
+                    onChange={(e) => {
+                      if (/^-?\d*\.?\d*$/.test(e.target.value)) {
+                        setVerticesNumber({
+                          field: 'force',
+                          value: e.target.valueAsNumber,
+                          index,
+                        })
+                      }
+                    }}
+                    disabled={vertex.isRestricted}
+                  /> */}
+                  <EderInput
+                    value={vertex.force}
+                    onChange={(value) =>
+                      setVerticesNumber({ field: 'force', value, index })
                     }
                     disabled={vertex.isRestricted}
                   />
                 </TableCell>
 
                 <TableCell className="text-left whitespace-nowrap">
-                  <Input
+                  {/* <Input
                     type="number"
                     defaultValue={vertex.displacement}
                     className="w-32"
@@ -150,6 +167,36 @@ const VerticesTable = () => {
                         value: e.target.valueAsNumber,
                         index,
                       })
+                    }
+                    disabled={!vertex.isRestricted}
+                  /> */}
+                  {/* <Input
+                    type="text"
+                    value={vertex.displacement}
+                    className="w-32"
+                    // onBlur={(e) =>
+                    //   setVerticesNumber({
+                    //     field: 'force',
+                    //     value: e.target.valueAsNumber,
+                    //     index,
+                    //   })
+                    // }
+                    onChange={(e) => {
+                      if (/^-?\d*\.?\d*$/.test(e.target.value)) {
+                        setVerticesNumber({
+                          field: 'displacement',
+                          value: e.target.valueAsNumber,
+                          index,
+                        })
+                      }
+                    }}
+                    disabled={!vertex.isRestricted}
+                    step="any"
+                  /> */}
+                  <EderInput
+                    value={vertex.displacement}
+                    onChange={(value) =>
+                      setVerticesNumber({ field: 'displacement', value, index })
                     }
                     disabled={!vertex.isRestricted}
                   />
