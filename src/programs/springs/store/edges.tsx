@@ -1,9 +1,8 @@
-import { atom } from 'jotai'
 import { produce } from 'immer'
+import { atom } from 'jotai'
 import { v4 as uuidv4 } from 'uuid'
 import { initialEdgesData } from '../data/data1'
 import { IInputReactEdges } from '../interfaces/edges'
-import { ChangeEvent } from 'react'
 import { atomGetVertices } from './vertices'
 
 type stringFields = 'name' | 'from' | 'to'
@@ -19,6 +18,7 @@ interface ISetReactEdgesString {
   value: string
   index: number
 }
+
 export const atomSetEdgesString = atom(
   null,
   (_get, set, { field, value, index }: ISetReactEdgesString) => {

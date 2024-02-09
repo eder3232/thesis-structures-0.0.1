@@ -1,7 +1,6 @@
 import { atom } from 'jotai'
 import { IErrorVertices } from '../../interfaces/errors'
 import { atomGetVertices } from '../vertices'
-import { errorsCode } from './errorsCode'
 
 // const atomVerticesErrors = atom<IErrorVertices[]>([])
 

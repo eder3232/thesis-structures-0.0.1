@@ -1,5 +1,4 @@
 import { atom } from 'jotai'
-
 import { produce } from 'immer'
 import { v4 as uuidv4 } from 'uuid'
 import { initialVerticesData } from '../data/data1'
