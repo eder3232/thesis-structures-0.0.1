@@ -32,7 +32,7 @@ const VerticesTable = () => {
 
   const [, setVerticesString] = useAtom(atomSetVerticesString)
   const [, setVerticesNumber] = useAtom(atomSetVerticesNumber)
-  const [, setVerticesBoolean] = useAtom(atomSetVerticesBoolean)
+  // const [, setVerticesBoolean] = useAtom(atomSetVerticesBoolean)
   const [, setVerticesSwitchRestricted] = useAtom(
     atomSetVerticesSwitchRestricted
   )
@@ -352,7 +352,11 @@ const VerticesTable = () => {
                 </TableCell>
 
                 <TableCell>
-                  <SpecialConditions />
+                  <SpecialConditions
+                    index={index}
+                    valueX={vertex.isRestrictedX}
+                    valueZ={vertex.isRestrictedZ}
+                  />
                 </TableCell>
 
                 {areDofDefinedByUser && (

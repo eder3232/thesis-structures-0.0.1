@@ -98,19 +98,20 @@ export const atomSetVerticesSwitchRestricted = atom(
         if (axis === 'x') {
           if (draft[index].isRestrictedX === false) {
             draft[index]['forceX'] = 0
+            draft[index]['springX'] = 0
           }
           if (draft[index].isRestrictedZ === false) {
             draft[index]['displacementZ'] = 0
+            draft[index]['springZ'] = 0
           }
-
           draft[index]['isRestrictedX'] = !draft[index].isRestrictedX
         }
 
         if (axis === 'z') {
-          if (draft[index].isRestrictedZ === false) {
+          if (draft[index].isRestrictedZ === true) {
             draft[index]['forceZ'] = 0
           }
-          if (draft[index].isRestrictedX === false) {
+          if (draft[index].isRestrictedX === true) {
             draft[index]['displacementZ'] = 0
           }
           draft[index]['isRestrictedZ'] = !draft[index].isRestrictedZ
@@ -165,26 +166,55 @@ export const atomSetVerticesResetDofs = atom(
     let restrictedCounter = 0
     let unrestrictedCounter = 0
 
-    const numberOfRestricted = _get(atomGetVertices).filter(
-      (vertex) => vertex.isRestrictedX || vertex.isRestrictedZ
-    ).length
+    // const numberOfRestricted = _get(atomGetVertices).filter(
+    //   (vertex) => vertex.isRestrictedX || vertex.isRestrictedZ
+    // ).length
+    const numberOfRestricted = _get(atomGetVertices).reduce((a, c) => {
+      if (c.isRestrictedX) a++
+      if (c.isRestrictedZ) a++
+      return a
+    }, 0)
 
-    const numberOfUnrestricted = _get(atomGetVertices).filter(
-      (vertex) => !vertex.isRestrictedX && !vertex.isRestrictedZ
-    ).length
+    // const numberOfUnrestricted = _get(atomGetVertices).filter(
+    //   (vertex) => !vertex.isRestrictedX && !vertex.isRestrictedZ
+    // ).length
+
+    const numberOfUnrestricted = _get(atomGetVertices).reduce((a, c) => {
+      if (!c.isRestrictedX) a++
+      if (!c.isRestrictedZ) a++
+      return a
+    }, 0)
 
     set(
       atomVertices,
       produce((draft) => {
         if (areRestrictedOnTop) {
           draft.forEach((vertex) => {
-            if (vertex.isRestrictedX || vertex.isRestrictedZ) {
+            // if (vertex.isRestrictedX || vertex.isRestrictedZ) {
+            //   vertex.userDOFX = restrictedCounter + 1
+            //   vertex.userDOFZ = restrictedCounter + 1
+            //   restrictedCounter++
+            // } else {
+            //   vertex.userDOFX = numberOfRestricted + unrestrictedCounter + 1
+            //   vertex.userDOFZ = numberOfRestricted + unrestrictedCounter + 2
+            //   unrestrictedCounter++
+            // }
+            if (vertex.isRestrictedX) {
               vertex.userDOFX = restrictedCounter + 1
-              vertex.userDOFZ = restrictedCounter + 1
               restrictedCounter++
             } else {
               vertex.userDOFX = numberOfRestricted + unrestrictedCounter + 1
-              vertex.userDOFZ = numberOfRestricted + unrestrictedCounter + 2
+              unrestrictedCounter++
+            }
+            if (vertex.isRestrictedZ) {
+              vertex.userDOFZ = restrictedCounter + 1
+              restrictedCounter++
+            } else {
+              console.log({
+                numberOfRestricted,
+                unrestrictedCounter,
+              })
+              vertex.userDOFZ = numberOfRestricted + unrestrictedCounter + 1
               unrestrictedCounter++
             }
           })
