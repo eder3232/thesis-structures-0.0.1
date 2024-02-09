@@ -10,15 +10,15 @@ interface EderInputProps {
   disabled?: boolean
 }
 
-const EderInput: React.FC<EderInputProps> = ({ value, onChange, disabled }) => {
+const EderInputV3: React.FC<EderInputProps> = ({
+  value,
+  onChange,
+  disabled,
+}) => {
   const [showValue, setShowValue] = useState<string>(value.toString() || '0')
-  // const [evaluatedValue, setEvaluatedValue] = useState<string>('')
+  const [evaluatedValue, setEvaluatedValue] = useState<string>('')
   const [isEditMode, setIsEditMode] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
-
-  useEffect(() => {
-    setShowValue(value.toString() || '0')
-  }, [value])
 
   // useEffect(() => {
   //   setShowValue(value.toString() || '0')
@@ -30,31 +30,27 @@ const EderInput: React.FC<EderInputProps> = ({ value, onChange, disabled }) => {
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [value])
 
-  // useEffect(() => {
-  //   setShowValue(value.toString() || '0')
-  //   try {
-  //     setEvaluatedValue(evaluate(showValue))
-  //   } catch {
-  //     setEvaluatedValue('Error')
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [])
+  console.log({
+    showValue,
+    value,
+    evaluatedValue,
+  })
 
-  // useEffect(() => {
-  //   try {
-  //     const evaluatedValue = evaluate(showValue)
-  //     console.log(evaluatedValue)
-  //     setEvaluatedValue(evaluate(showValue))
-  //     onChange(evaluatedValue)
-  //   } catch {
-  //     setEvaluatedValue('Error')
-  //     onChange(NaN)
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [isEditMode, value])
+  useEffect(() => {
+    try {
+      const evaluatedValue = evaluate(showValue)
+      console.log(evaluatedValue)
+      setEvaluatedValue(evaluate(showValue))
+      onChange(evaluatedValue)
+    } catch {
+      setEvaluatedValue('Error')
+      onChange(NaN)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isEditMode, value])
 
   return (
-    <div className="w-28">
+    <div className="w-32">
       <ClickAwayListener onClickAway={() => setIsEditMode(false)}>
         {isEditMode ? (
           <Input
@@ -65,17 +61,6 @@ const EderInput: React.FC<EderInputProps> = ({ value, onChange, disabled }) => {
               if (e.key === 'Enter') {
                 setIsEditMode(false)
                 setShowValue(inputRef.current?.value || '')
-              }
-            }}
-            // onBlur={() => {
-            //   onChange(Number(inputRef.current?.value))
-            // }}
-            onBlur={() => {
-              // onChange(Number(inputRef.current?.value))
-              try {
-                onChange(evaluate(inputRef.current?.value || '0'))
-              } catch {
-                onChange(NaN)
               }
             }}
           />
@@ -96,7 +81,7 @@ const EderInput: React.FC<EderInputProps> = ({ value, onChange, disabled }) => {
               }, 0)
             }}
           >
-            {value}
+            {evaluatedValue}
           </div>
         )}
       </ClickAwayListener>
@@ -104,4 +89,4 @@ const EderInput: React.FC<EderInputProps> = ({ value, onChange, disabled }) => {
   )
 }
 
-export default EderInput
+export default EderInputV3
