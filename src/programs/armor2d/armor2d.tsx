@@ -6,6 +6,8 @@ import VerticesTable from './components/verticesTable/verticesTable'
 import AreDofDefinedByUser from './components/areDofDefinedByUser'
 import TypographyH3 from '@/components/typography/typography-h3'
 import EdgesTable from './components/edgesTable/edgesTable'
+import VerticesErrors from './components/errors/verticesErrors'
+import EdgesErrors from './components/errors/edgesErrors'
 
 const Armor2D = () => {
   return (
@@ -23,6 +25,12 @@ const Armor2D = () => {
       <TypographyH3>Barras:</TypographyH3>
 
       <EdgesTable />
+
+      <div className="flex flex-col gap-2">
+        <VerticesErrors />
+
+        <EdgesErrors />
+      </div>
     </div>
   )
 }
