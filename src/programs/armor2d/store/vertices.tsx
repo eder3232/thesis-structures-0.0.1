@@ -100,16 +100,17 @@ export const atomSetVerticesSwitchRestricted = atom(
             draft[index]['forceX'] = 0
             draft[index]['springX'] = 0
           }
-          if (draft[index].isRestrictedZ === false) {
-            draft[index]['displacementZ'] = 0
-            draft[index]['springZ'] = 0
+          if (draft[index].isRestrictedZ === true) {
+            draft[index]['displacementX'] = 0
+            // draft[index]['springZ'] = 0
           }
           draft[index]['isRestrictedX'] = !draft[index].isRestrictedX
         }
 
         if (axis === 'z') {
-          if (draft[index].isRestrictedZ === true) {
+          if (draft[index].isRestrictedZ === false) {
             draft[index]['forceZ'] = 0
+            draft[index]['springX'] = 0
           }
           if (draft[index].isRestrictedX === true) {
             draft[index]['displacementZ'] = 0
@@ -219,6 +220,7 @@ export const atomSetVerticesResetDofs = atom(
             }
           })
         } else {
+          //TODO: Fix this
           draft.forEach((vertex) => {
             if (vertex.isRestrictedX || vertex.isRestrictedZ) {
               vertex.userDOFX = numberOfUnrestricted + restrictedCounter + 1
