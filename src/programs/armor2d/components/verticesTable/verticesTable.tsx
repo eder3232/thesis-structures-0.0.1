@@ -415,6 +415,7 @@ const VerticesTable = () => {
             ))}
           </TableBody>
         </Table>
+        {/* <pre>{JSON.stringify(vertices, null, 2)}</pre> */}
       </div>
     </div>
   )
