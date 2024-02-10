@@ -13,29 +13,6 @@ import { ChevronsUpDown } from 'lucide-react'
 import { useState } from 'react'
 import { atomSetEdgesCombobox } from '../../store/edges'
 
-const frameworks = [
-  {
-    value: 'next.js',
-    label: 'Next.js',
-  },
-  {
-    value: 'sveltekit',
-    label: 'SvelteKit',
-  },
-  {
-    value: 'nuxt.js',
-    label: 'Nuxt.js',
-  },
-  {
-    value: 'remix',
-    label: 'Remix',
-  },
-  {
-    value: 'astro',
-    label: 'Astro',
-  },
-]
-
 interface Props {
   collection: { id: string; name: string }[]
   value: { id: string; name: string; from: string; to: string }

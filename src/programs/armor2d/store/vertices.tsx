@@ -1,7 +1,6 @@
 import { atom } from 'jotai'
 import { IInputReactVertices } from '../interfaces/vertices'
 import { initialVerticesData } from '../data/data1'
-import { i, number } from 'mathjs'
 import { produce } from 'immer'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -102,7 +101,6 @@ export const atomSetVerticesSwitchRestricted = atom(
           }
           if (draft[index].isRestrictedZ === true) {
             draft[index]['displacementX'] = 0
-            // draft[index]['springZ'] = 0
           }
           draft[index]['isRestrictedX'] = !draft[index].isRestrictedX
         }
@@ -167,18 +165,11 @@ export const atomSetVerticesResetDofs = atom(
     let restrictedCounter = 0
     let unrestrictedCounter = 0
 
-    // const numberOfRestricted = _get(atomGetVertices).filter(
-    //   (vertex) => vertex.isRestrictedX || vertex.isRestrictedZ
-    // ).length
     const numberOfRestricted = _get(atomGetVertices).reduce((a, c) => {
       if (c.isRestrictedX) a++
       if (c.isRestrictedZ) a++
       return a
     }, 0)
-
-    // const numberOfUnrestricted = _get(atomGetVertices).filter(
-    //   (vertex) => !vertex.isRestrictedX && !vertex.isRestrictedZ
-    // ).length
 
     const numberOfUnrestricted = _get(atomGetVertices).reduce((a, c) => {
       if (!c.isRestrictedX) a++
@@ -191,15 +182,6 @@ export const atomSetVerticesResetDofs = atom(
       produce((draft) => {
         if (areRestrictedOnTop) {
           draft.forEach((vertex) => {
-            // if (vertex.isRestrictedX || vertex.isRestrictedZ) {
-            //   vertex.userDOFX = restrictedCounter + 1
-            //   vertex.userDOFZ = restrictedCounter + 1
-            //   restrictedCounter++
-            // } else {
-            //   vertex.userDOFX = numberOfRestricted + unrestrictedCounter + 1
-            //   vertex.userDOFZ = numberOfRestricted + unrestrictedCounter + 2
-            //   unrestrictedCounter++
-            // }
             if (vertex.isRestrictedX) {
               vertex.userDOFX = restrictedCounter + 1
               restrictedCounter++
@@ -211,23 +193,23 @@ export const atomSetVerticesResetDofs = atom(
               vertex.userDOFZ = restrictedCounter + 1
               restrictedCounter++
             } else {
-              console.log({
-                numberOfRestricted,
-                unrestrictedCounter,
-              })
               vertex.userDOFZ = numberOfRestricted + unrestrictedCounter + 1
               unrestrictedCounter++
             }
           })
         } else {
-          //TODO: Fix this
           draft.forEach((vertex) => {
-            if (vertex.isRestrictedX || vertex.isRestrictedZ) {
+            if (vertex.isRestrictedX) {
               vertex.userDOFX = numberOfUnrestricted + restrictedCounter + 1
-              vertex.userDOFZ = numberOfUnrestricted + restrictedCounter + 1
               restrictedCounter++
             } else {
               vertex.userDOFX = unrestrictedCounter + 1
+              unrestrictedCounter++
+            }
+            if (vertex.isRestrictedZ) {
+              vertex.userDOFZ = numberOfUnrestricted + restrictedCounter + 1
+              restrictedCounter++
+            } else {
               vertex.userDOFZ = unrestrictedCounter + 1
               unrestrictedCounter++
             }
