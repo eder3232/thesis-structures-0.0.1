@@ -5,7 +5,7 @@ import { IVertex, IVerticesUtils } from './Vertices'
 import { add, inv, multiply, subtract, transpose, zeros } from 'mathjs'
 import { tablePrinter } from '../utils/printer'
 
-interface ILocalArrays {
+export interface ILocalArrays {
   transform: number[][]
   transformTransposed: number[][]
   withoutEa_localCoordinates: number[][]
@@ -25,6 +25,13 @@ interface IDataArray {
   k: number
 }
 
+export interface IOrderDOF {
+  name: string
+  isRestricted: boolean
+  dof_user: number
+  dof_internal: number
+}
+
 export class Armor2D {
   verticesUtils: IVerticesUtils
   vertices: Map<string, IVertex>
@@ -40,12 +47,7 @@ export class Armor2D {
   }
 
   utils: {
-    orderOfDOF: {
-      name: string
-      isRestricted: boolean
-      dof_internal: number
-      dof_user: number
-    }[]
+    orderOfDOF: IOrderDOF[]
     dofPointerInDataArray: Map<number, number>
   } = {
     orderOfDOF: [],
@@ -281,10 +283,10 @@ export class Armor2D {
       }
     }
 
-    console.log(
-      `Matriz de rigidez local provisional al ensamblar: ${e.tableDOF}`
-    )
-    tablePrinter(copyGlobal, 2)
+    // console.log(
+    //   `Matriz de rigidez local provisional al ensamblar: ${e.tableDOF}`
+    // )
+    // tablePrinter(copyGlobal, 2)
     return copyGlobal
   }
 
@@ -296,8 +298,8 @@ export class Armor2D {
       record.push({ label: `${key}`, value: structuredClone(currentGlobal) })
     }
     this.k.global = currentGlobal
-    console.log('Matriz de rigidez global:')
-    tablePrinter(this.k.global, 2)
+    // console.log('Matriz de rigidez global:')
+    // tablePrinter(this.k.global, 2)
     return {
       kGlobal: this.k.global,
       record,

@@ -1,12 +1,12 @@
 import { atom } from 'jotai'
-import { ILocalArrays, IOrderDOF, Spring } from '../../logic/spring'
-import { atomGetVertices } from '../vertices'
-import { atomGetEdges } from '../edges'
-import { Vertices } from '../../logic/vertices'
-import { atomGetEdgesErrors } from '../errors/edgesErrors'
-import { IErrorLogic } from '../../interfaces/errors'
-import { Edges } from '../../logic/edges'
-import { atomGetAreRestrictedOnTop } from '../areRestrictedsOnTop'
+import { ILocalArrays, IOrderDOF, Spring } from '../logic/spring'
+import { atomGetVertices } from './vertices'
+import { atomGetEdges } from './edges'
+import { Vertices } from '../logic/vertices'
+import { atomGetEdgesErrors } from './errors/edgesErrors'
+import { IErrorLogic } from '../interfaces/errors'
+import { Edges } from '../logic/edges'
+import { atomGetAreRestrictedOnTop } from './areRestrictedsOnTop'
 
 interface ISpringsResults {
   orderDOF: IOrderDOF[]
@@ -94,6 +94,7 @@ export const atomGetResults = atom<IResponse>((get) => {
       },
     },
   }
+
   let status: IStatus = 'ok'
 
   const errors = get(atomGetEdgesErrors)

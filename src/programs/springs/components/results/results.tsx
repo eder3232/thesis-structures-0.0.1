@@ -1,15 +1,9 @@
-import TypographyH3 from '@/components/typography/typography-h3'
 import { useAtom } from 'jotai'
-import { atomGetAreDofDefinedByUser } from '../../store/areDofDefinedByUser'
-import { atomGetResults } from '../../store/results/results'
-
 import 'katex/dist/katex.min.css'
 import { InlineMath } from 'react-katex'
 
-import { Terminal } from 'lucide-react'
-
+import TypographyH3 from '@/components/typography/typography-h3'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
-
 import {
   Table,
   TableBody,
@@ -18,11 +12,16 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { Terminal } from 'lucide-react'
+import { cn } from '@/lib/utils'
+
+import { atomGetResults } from '../../store/results'
+import { atomGetAreRestrictedOnTop } from '../../store/areRestrictedsOnTop'
+import { atomGetAreDofDefinedByUser } from '../../store/areDofDefinedByUser'
+
 import GlobalByStep from './globalByStep'
 import Locals from './locals'
 import TwoDimensionalArray from './shared/twoDimensionalArray'
-import { atomGetAreRestrictedOnTop } from '../../store/areRestrictedsOnTop'
-import { cn } from '@/lib/utils'
 import InternalForces from './internalForces'
 
 const Results = () => {
