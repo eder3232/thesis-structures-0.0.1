@@ -201,5 +201,32 @@ export const atomGetResults = atom<IResponse>((get) => {
     isRestrictedAbove: areRestrictedOnTop,
   })
 
+  armor2D.generateDOFPointerInDataArray()
+
+  const responseKGlobal = armor2D.buildGlobal()
+
+  response.results.k.global = responseKGlobal.kGlobal
+
+  response.results.utils.kGlobalHistory = responseKGlobal.record
+
+  const responseForces = armor2D.buildForces()
+
+  response.results.f.global = responseForces.global
+  response.results.f.restricted = responseForces.restricted
+  response.results.f.unrestricted = responseForces.unrestricted
+
+  const responseDisplacements = armor2D.buildDisplacements()
+
+  response.results.u.global = responseDisplacements.global
+  response.results.u.restricted = responseDisplacements.restricted
+  response.results.u.unrestricted = responseDisplacements.unrestricted
+
+  const responseSplitGlobal = armor2D.splitGlobal()
+
+  response.results.k.krr = responseSplitGlobal.krr
+  response.results.k.kru = responseSplitGlobal.kru
+  response.results.k.kur = responseSplitGlobal.kur
+  response.results.k.kuu = responseSplitGlobal.kuu
+
   return response
 })
