@@ -171,122 +171,124 @@ const Results = () => {
             </div>
 
             {/* Separando la ecuación global de rigidez: */}
-            <TypographyH3>
-              Separando la ecuación global de rigidez:
-            </TypographyH3>
+            <div className="flex flex-col gap-2">
+              <TypographyH3>
+                Separando la ecuación global de rigidez:
+              </TypographyH3>
 
-            <p>
-              Se puede definir la ecuación matricial de rigidez de una forma más
-              reducida:
-            </p>
-            {areRestrictedOnTop ? (
-              <div className="ml-0 text-xl md:ml-8">
-                <InlineMath
-                  math="\begin{bmatrix} F_r\\F_u \end{bmatrix}
+              <p>
+                Se puede definir la ecuación matricial de rigidez de una forma
+                más reducida:
+              </p>
+              {areRestrictedOnTop ? (
+                <div className="ml-0 text-xl md:ml-8">
+                  <InlineMath
+                    math="\begin{bmatrix} F_r\\F_u \end{bmatrix}
                       =
                       \begin{bmatrix} K_{rr} & K_{ru} \\ K_{ur} & K_{uu} \end{bmatrix}
                       \cdot 
                       \begin{bmatrix} U_r\\U_u \end{bmatrix}"
-                />
-              </div>
-            ) : (
-              <div className="ml-0 text-xl md:ml-8">
-                <InlineMath
-                  math="\begin{bmatrix} F_u\\F_r \end{bmatrix}
+                  />
+                </div>
+              ) : (
+                <div className="ml-0 text-xl md:ml-8">
+                  <InlineMath
+                    math="\begin{bmatrix} F_u\\F_r \end{bmatrix}
                       =
                       \begin{bmatrix} K_{uu} & K_{ur} \\ K_{ru} & K_{rr} \end{bmatrix}
                       \cdot 
                       \begin{bmatrix} U_u\\U_r \end{bmatrix}"
-                />
-              </div>
-            )}
-            <p>Se forman las siguientes matrices de rigidez:</p>
+                  />
+                </div>
+              )}
+              <p>Se forman las siguientes matrices de rigidez:</p>
 
-            {/* <div className="flex max-w-full items-center overflow-auto lg:w-auto"> */}
-            <div className="overflow-auto relative">
-              <div className="min-w-min flex items-center">
-                <div
-                  className={cn('flex flex-col gap-4', {
-                    'flex-col-reverse': areRestrictedOnTop,
-                  })}
-                >
-                  <TwoDimensionalArray
-                    arr={response.results.f.unrestricted}
-                    name={'Fu'}
-                  />
-                  <TwoDimensionalArray
-                    arr={response.results.f.restricted}
-                    name={'Fr'}
-                  />
-                </div>
-                <div className="mx-4 text-2xl">
-                  <InlineMath math="=" />
-                </div>
-                <div>
-                  {areRestrictedOnTop ? (
-                    <div className="flex items-center gap-x-4">
-                      <div className="flex flex-col gap-4">
-                        <TwoDimensionalArray
-                          arr={response.results.k.krr}
-                          name={'Krr'}
-                        />
-                        <TwoDimensionalArray
-                          arr={response.results.k.kur}
-                          name={'Kur'}
-                        />
+              {/* <div className="flex max-w-full items-center overflow-auto lg:w-auto"> */}
+              <div className="overflow-auto relative">
+                <div className="min-w-min flex items-center">
+                  <div
+                    className={cn('flex flex-col gap-4', {
+                      'flex-col-reverse': areRestrictedOnTop,
+                    })}
+                  >
+                    <TwoDimensionalArray
+                      arr={response.results.f.unrestricted}
+                      name={'Fu'}
+                    />
+                    <TwoDimensionalArray
+                      arr={response.results.f.restricted}
+                      name={'Fr'}
+                    />
+                  </div>
+                  <div className="mx-4 text-2xl">
+                    <InlineMath math="=" />
+                  </div>
+                  <div>
+                    {areRestrictedOnTop ? (
+                      <div className="flex items-center gap-x-4">
+                        <div className="flex flex-col gap-4">
+                          <TwoDimensionalArray
+                            arr={response.results.k.krr}
+                            name={'Krr'}
+                          />
+                          <TwoDimensionalArray
+                            arr={response.results.k.kur}
+                            name={'Kur'}
+                          />
+                        </div>
+                        <div className="flex flex-col gap-4">
+                          <TwoDimensionalArray
+                            arr={response.results.k.kru}
+                            name={'Kru'}
+                          />
+                          <TwoDimensionalArray
+                            arr={response.results.k.kuu}
+                            name={'Kuu'}
+                          />
+                        </div>
                       </div>
-                      <div className="flex flex-col gap-4">
-                        <TwoDimensionalArray
-                          arr={response.results.k.kru}
-                          name={'Kru'}
-                        />
-                        <TwoDimensionalArray
-                          arr={response.results.k.kuu}
-                          name={'Kuu'}
-                        />
+                    ) : (
+                      <div className="flex">
+                        <div className="flex flex-col gap-4">
+                          <TwoDimensionalArray
+                            arr={response.results.k.kuu}
+                            name={'Kuu'}
+                          />
+                          <TwoDimensionalArray
+                            arr={response.results.k.kru}
+                            name={'Kru'}
+                          />
+                        </div>
+                        <div className="flex flex-col gap-4">
+                          <TwoDimensionalArray
+                            arr={response.results.k.kur}
+                            name={'Kur'}
+                          />
+                          <TwoDimensionalArray
+                            arr={response.results.k.krr}
+                            name={'Krr'}
+                          />
+                        </div>
                       </div>
-                    </div>
-                  ) : (
-                    <div className="flex">
-                      <div className="flex flex-col gap-4">
-                        <TwoDimensionalArray
-                          arr={response.results.k.kuu}
-                          name={'Kuu'}
-                        />
-                        <TwoDimensionalArray
-                          arr={response.results.k.kru}
-                          name={'Kru'}
-                        />
-                      </div>
-                      <div className="flex flex-col gap-4">
-                        <TwoDimensionalArray
-                          arr={response.results.k.kur}
-                          name={'Kur'}
-                        />
-                        <TwoDimensionalArray
-                          arr={response.results.k.krr}
-                          name={'Krr'}
-                        />
-                      </div>
-                    </div>
-                  )}
-                </div>
-                <div className="mx-4 text-2xl">
-                  <InlineMath math="\cdot" />
-                </div>
-                <div
-                  className={cn('flex flex-col gap-4 overflow-x-auto', {
-                    'flex-col-reverse': areRestrictedOnTop,
-                  })}
-                >
-                  <TwoDimensionalArray
-                    arr={response.results.u.unrestricted}
-                    name={'Uu'}
-                  />
-                  <TwoDimensionalArray
-                    arr={response.results.u.restricted}
-                    name={'Ur'}
-                  />
+                    )}
+                  </div>
+                  <div className="mx-4 text-2xl">
+                    <InlineMath math="\cdot" />
+                  </div>
+                  <div
+                    className={cn('flex flex-col gap-4 overflow-x-auto', {
+                      'flex-col-reverse': areRestrictedOnTop,
+                    })}
+                  >
+                    <TwoDimensionalArray
+                      arr={response.results.u.unrestricted}
+                      name={'Uu'}
+                    />
+                    <TwoDimensionalArray
+                      arr={response.results.u.restricted}
+                      name={'Ur'}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
