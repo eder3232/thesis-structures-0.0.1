@@ -32,14 +32,14 @@ const Page = () => {
               <CardContent>
                 <Image
                   alt="Product 1"
-                  className="object-cover w-full h-60"
+                  // className="object-cover w-full h-60"
                   height={300}
                   src={program.imageURL}
-                  style={{
-                    aspectRatio: '400/300',
-                    objectFit: 'cover',
-                  }}
-                  width={400}
+                  // style={{
+                  //   aspectRatio: '400/300',
+                  //   objectFit: 'cover',
+                  // }}
+                  width={500}
                 />
               </CardContent>
               <CardFooter>
