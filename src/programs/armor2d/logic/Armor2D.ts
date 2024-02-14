@@ -501,7 +501,7 @@ export class Armor2D {
       return {
         ok: false,
         message: 'La matriz kuu no tiene inversa, verifica los datos.',
-        uSolved: [],
+        uuSolved: [],
       }
     }
 
@@ -512,7 +512,7 @@ export class Armor2D {
 
     // console.log('uSolved')
     // tablePrinter(this.solved.u.unrestricted, 4)
-    return { uSolved: this.solved.u.unrestricted, ok: true, message: '' }
+    return { uuSolved: this.solved.u.unrestricted, ok: true, message: '' }
   }
 
   solveForces() {

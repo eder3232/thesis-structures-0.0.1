@@ -3,16 +3,20 @@ import { useAtom } from 'jotai'
 import 'katex/dist/katex.min.css'
 import { InlineMath } from 'react-katex'
 
+import { Terminal } from 'lucide-react'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { cn } from '@/lib/utils'
+
 import TypographyH3 from '@/components/typography/typography-h3'
 
 import { atomGetResults } from '../../store/results'
 import { atomGetAreDofDefinedByUser } from '../../store/areDofDefinedByUser'
 import { atomGetAreRestrictedOnTop } from '../../store/areRestrictedsOnTop'
+
 import Locals from './locals/locals'
 import OrderOfDof from './orderOfDof'
-import TwoDimensionalArray from './shared/twoDimensionalArray'
 import GlobalByStep from './globalByStep'
-import { cn } from '@/lib/utils'
+import TwoDimensionalArray from './shared/twoDimensionalArray'
 
 const Results = () => {
   const [response] = useAtom(atomGetResults)
@@ -236,6 +240,219 @@ const Results = () => {
                   </div>
                 </div>
               </div>
+
+              {response.status === 'inverseMatrixError' && (
+                <Alert className="my-2 w-80 md:w-[600px]">
+                  <Terminal className="h-4 w-4" />
+                  <AlertTitle>
+                    Error en la resolución del sistema de ecuaciones
+                  </AlertTitle>
+                  <AlertDescription>
+                    No se pudo resolver el sistema de ecuaciones. Esto puede
+                    deberse a que la matriz de rigidez global no es invertible.
+                  </AlertDescription>
+                </Alert>
+              )}
+
+              {response.status !== 'inverseMatrixError' && (
+                <div className="flex flex-col gap-4">
+                  {/* Solución de desplazamientos */}
+                  <div className="flex flex-col gap-2">
+                    <TypographyH3>
+                      Solución de los desplazamientos no restringidos:
+                    </TypographyH3>
+                    <p>
+                      Se resuelve el sistema de ecuaciones matricial para
+                      obtener los desplazamientos.
+                    </p>
+
+                    <div className="ml-0 text-xl md:ml-8 whitespace-nowrap">
+                      <InlineMath
+                        math="\begin{bmatrix} U_u \end{bmatrix}
+                        =
+                        \begin{bmatrix} K_{uu} \end{bmatrix}^{-1}
+                        \cdot
+                        \{
+                          \begin{bmatrix} F_u \end{bmatrix}
+                          -
+                          \begin{bmatrix} K_{ur} \end{bmatrix}
+                          \cdot
+                          \begin{bmatrix} U_r \end{bmatrix}
+                        \} 
+                        "
+                      />
+                    </div>
+                    <p>Entonces se tiene la siguiente ecuación:</p>
+
+                    <div className="overflow-auto relative">
+                      <div className="min-w-min flex items-center">
+                        <TwoDimensionalArray
+                          arr={response.results.u.unrestricted}
+                          name={'Uu'}
+                        />
+
+                        <div className="mx-4 text-2xl whitespace-nowrap">
+                          <InlineMath math="=" />
+                        </div>
+
+                        <TwoDimensionalArray
+                          arr={response.results.k.kuu}
+                          name={'Kuu'}
+                        />
+
+                        <div className="mx-4 text-2xl whitespace-nowrap">
+                          <InlineMath math="^{-1}" />
+                        </div>
+
+                        <div className="mx-4 text-2xl whitespace-nowrap">
+                          <InlineMath math="\cdot \{" />
+                        </div>
+
+                        <TwoDimensionalArray
+                          arr={response.results.f.unrestricted}
+                          name={'Fu'}
+                        />
+
+                        <div className="mx-4 text-2xl whitespace-nowrap">
+                          <InlineMath math="-" />
+                        </div>
+
+                        <TwoDimensionalArray
+                          arr={response.results.k.kur}
+                          name={'Kur'}
+                        />
+
+                        <div className="mx-4 text-2xl whitespace-nowrap">
+                          <InlineMath math="\cdot" />
+                        </div>
+
+                        <TwoDimensionalArray
+                          arr={response.results.u.unrestricted}
+                          name={'Ur'}
+                        />
+
+                        <div className="mx-4 text-2xl whitespace-nowrap">
+                          <InlineMath math="\}" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <p>Resolviendo se obtiene:</p>
+
+                    <div className="overflow-auto relative">
+                      <div className="min-w-min flex items-center">
+                        <TwoDimensionalArray
+                          arr={response.results.u.unrestricted}
+                          name={'Uu'}
+                        />
+
+                        <div className="mx-4 text-2xl  whitespace-nowrap">
+                          <InlineMath math="=" />
+                        </div>
+
+                        <TwoDimensionalArray
+                          arr={response.results.u.solved}
+                          name={'UuSolved'}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Solución de fuerzas */}
+                  <div className="flex flex-col gap-2">
+                    <TypographyH3>
+                      Solución de las fuerzas restringidas:
+                    </TypographyH3>
+                    <p>
+                      Se despeja de la ecuacion global de rigidez las fuerzas
+                      restringidas:
+                    </p>
+
+                    <div className="ml-0 text-xl md:ml-8 whitespace-nowrap">
+                      <InlineMath
+                        math="\begin{bmatrix} F_r \end{bmatrix}
+                          =
+                          \begin{bmatrix} K_{ru} \end{bmatrix}
+                          \cdot
+                          \begin{bmatrix} U_{u} \end{bmatrix}
+                          +
+                          \begin{bmatrix} K_{rr} \end{bmatrix}
+                          \cdot
+                          \begin{bmatrix} U_{r} \end{bmatrix}
+                          "
+                      />
+                    </div>
+                    <p>Entonces se tiene la siguiente ecuación:</p>
+
+                    <div className="overflow-auto relative">
+                      <div className="min-w-min flex items-center">
+                        <TwoDimensionalArray
+                          arr={response.results.f.restricted}
+                          name={'Fr'}
+                        />
+
+                        <div className="mx-4 text-2xl whitespace-nowrap">
+                          <InlineMath math="=" />
+                        </div>
+
+                        <TwoDimensionalArray
+                          arr={response.results.k.kru}
+                          name={'Kru'}
+                        />
+
+                        <div className="mx-4 text-2xl whitespace-nowrap">
+                          <InlineMath math="\cdot" />
+                        </div>
+
+                        <TwoDimensionalArray
+                          arr={response.results.u.solved}
+                          name={'USolved'}
+                        />
+
+                        <div className="mx-4 text-2xl whitespace-nowrap">
+                          <InlineMath math="+" />
+                        </div>
+
+                        <TwoDimensionalArray
+                          arr={response.results.k.krr}
+                          name={'Krr'}
+                        />
+
+                        <div className="mx-4 text-2xl whitespace-nowrap">
+                          <InlineMath math="\cdot" />
+                        </div>
+
+                        <TwoDimensionalArray
+                          arr={response.results.u.restricted}
+                          name={'Ur'}
+                        />
+                      </div>
+                    </div>
+
+                    <p>Resolviendo se obtiene:</p>
+
+                    <div className="overflow-auto relative">
+                      <div className="min-w-min flex items-center">
+                        <TwoDimensionalArray
+                          arr={response.results.f.restricted}
+                          name={'Fr'}
+                        />
+
+                        <div className="mx-4 text-2xl whitespace-nowrap">
+                          <InlineMath math="=" />
+                        </div>
+
+                        <TwoDimensionalArray
+                          arr={response.results.f.solved}
+                          name={'FrSolved'}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <p className="text-xl font-bold">Fin de los resultados!</p>
+                </div>
+              )}
             </div>
           </div>
         )}

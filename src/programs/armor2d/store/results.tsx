@@ -228,5 +228,21 @@ export const atomGetResults = atom<IResponse>((get) => {
   response.results.k.kur = responseSplitGlobal.kur
   response.results.k.kuu = responseSplitGlobal.kuu
 
+  const { ok, message, uuSolved } = armor2D.solveDisplacements()
+
+  if (ok) {
+    response.results.u.solved = uuSolved
+    response.results.f.solved = armor2D.solveForces()
+  } else {
+    response.status = 'inverseMatrixError'
+    response.errors.push({
+      name: 'Error en la lógica al resolver el sistema de ecuaciones',
+      message: message,
+      typeError: 'logic',
+      errorCode: 'e302',
+      severity: 'error',
+    })
+  }
+
   return response
 })

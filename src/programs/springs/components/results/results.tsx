@@ -1,4 +1,5 @@
 import { useAtom } from 'jotai'
+
 import 'katex/dist/katex.min.css'
 import { InlineMath } from 'react-katex'
 

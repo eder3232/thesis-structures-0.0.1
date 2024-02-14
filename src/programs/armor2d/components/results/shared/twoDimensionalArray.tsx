@@ -96,7 +96,10 @@ const TwoDimensionalArray = ({ arr, name, decimals = 2 }: Props) => {
                 {index + 1}
               </TableCell>
               {row.map((cell, index) => (
-                <TableCell key={index} className="border text-right">
+                <TableCell
+                  key={index}
+                  className="border text-right whitespace-nowrap"
+                >
                   {typeof cell === 'number' ? cell.toFixed(selected.id) : cell}
                 </TableCell>
               ))}
