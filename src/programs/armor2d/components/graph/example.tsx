@@ -1,5 +1,5 @@
 import React from 'react'
-import Graph2D from './Graph2D'
+import Graph2D from './graph2D'
 
 const Page = () => {
   const points: Array<[number, number, number]> = [
