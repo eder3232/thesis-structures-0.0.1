@@ -10,7 +10,7 @@ export const atomGetVertices = atom((get) => get(atomVertices))
 
 type IAxis = 'x' | 'z'
 
-const axis: IAxis[] = ['x', 'z']
+const axis = ['x', 'z'] as const
 
 type stringFields = 'name'
 
@@ -90,7 +90,7 @@ export const atomSetVerticesBoolean = atom(
 
 export const atomSetVerticesSwitchRestricted = atom(
   null,
-  (_get, set, { index, axis }: { index: number; axis: 'x' | 'z' }) => {
+  (_get, set, { index, axis }: { index: number; axis: IAxis }) => {
     set(
       atomVertices,
       produce((draft) => {

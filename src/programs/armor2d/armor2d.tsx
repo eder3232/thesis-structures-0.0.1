@@ -1,16 +1,19 @@
 'use client'
 
+import { useAtom } from 'jotai'
+
 import TypographyH1 from '@/components/typography/typography-h1'
 import TypographyH2 from '@/components/typography/typography-h2'
-import VerticesTable from './components/verticesTable/verticesTable'
-import AreDofDefinedByUser from './components/areDofDefinedByUser'
 import TypographyH3 from '@/components/typography/typography-h3'
+
+import VerticesTable from './components/verticesTable/verticesTable'
 import EdgesTable from './components/edgesTable/edgesTable'
+import AreDofDefinedByUser from './components/areDofDefinedByUser'
+import AreRestrictedOnTop from './components/areRestrictedsOnTop'
 import VerticesErrors from './components/errors/verticesErrors'
 import EdgesErrors from './components/errors/edgesErrors'
-import AreRestrictedOnTop from './components/areRestrictedsOnTop'
 import Results from './components/results/results'
-import { useAtom } from 'jotai'
+
 import { atomGetErrors } from './store/errors/errors'
 
 const Armor2D = () => {
