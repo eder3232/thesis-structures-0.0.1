@@ -143,7 +143,7 @@ export const atomSetVerticesAddNewRow = atom(
       atomVertices,
       produce((draft) => {
         draft.splice(index + 1, 0, {
-          name: '',
+          name: `v${draft.length + 1}`,
           coordinateX: 0,
           coordinateY: 0,
           coordinateZ: 0,
