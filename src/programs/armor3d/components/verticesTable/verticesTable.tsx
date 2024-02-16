@@ -63,9 +63,9 @@ const VerticesTable = () => {
               <TableHead className="eder-head-text" colSpan={3}>
                 Restringido
               </TableHead>
-              <TableHead className="eder-head-text" rowSpan={2}>
+              {/* <TableHead className="eder-head-text" rowSpan={2}>
                 Condiciones especiales
-              </TableHead>
+              </TableHead> */}
               {areDofDefinedByUser && (
                 <TableHead className="eder-head-text" colSpan={3}>
                   Grados de libertad
@@ -329,7 +329,8 @@ const VerticesTable = () => {
                   />
                 </TableCell>
 
-                <TableCell className="text-center">Implementar!</TableCell>
+                {/* TODO: Implementar condiciones especiales */}
+                {/* <TableCell className="text-center">Implementar!</TableCell> */}
 
                 {areDofDefinedByUser && (
                   <>
