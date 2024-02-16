@@ -44,7 +44,7 @@ export const atomGetVerticesErrors = atom<IErrorVertices[]>((get) => {
         severity: 'error',
       })
     }
-    if (isNaN(vertex.forceX)) {
+    if (isNaN(vertex.forceZ)) {
       verticesErrors.push({
         name: 'Fuerza con valor no numerico.',
         message: `El nudo ${vertex.forceZ} tiene un valor de fuerza no numerico en el eje Z.`,
