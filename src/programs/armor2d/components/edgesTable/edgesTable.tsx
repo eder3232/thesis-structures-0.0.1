@@ -1,4 +1,19 @@
 import { useAtom } from 'jotai'
+
+import { MinusCircle, PlusCircle } from 'lucide-react'
+import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
+import EderInput from '@/components/shared/utils/ederInput'
+import { Input } from '@/components/ui/input'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
+
 import {
   atomGetEdges,
   atomSetEdgesAddNewRow,
@@ -8,20 +23,6 @@ import {
 } from '../../store/edges'
 import { atomGetVertices } from '../../store/vertices'
 
-import { MinusCircle, PlusCircle } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table'
-import { cn } from '@/lib/utils'
-import EderInput from '@/components/shared/utils/ederInput'
-import { Input } from '@/components/ui/input'
 import EdgesCombobox from './edgesCombobox'
 
 const EdgesTable = () => {

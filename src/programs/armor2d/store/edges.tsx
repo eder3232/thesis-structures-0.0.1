@@ -1,9 +1,10 @@
 import { atom } from 'jotai'
+import { produce } from 'immer'
+import { v4 as uuidv4 } from 'uuid'
+
 import { initialEdgesData } from '../data/data1'
 import { IInputReactEdges } from '../interfaces/edges'
-import { produce } from 'immer'
 import { atomGetVertices } from './vertices'
-import { v4 as uuidv4 } from 'uuid'
 
 type stringFields = 'name' | 'from' | 'to'
 
@@ -75,7 +76,7 @@ export const atomSetEdgesAddNewRow = atom(null, (_get, set, index: number) => {
 
       const fistItem = vertices[0]
       const lastItem = vertices.at(-1)
-      draft.push({
+      draft.splice(index + 1, 0, {
         id: uuidv4(),
         name: `e${draft.length + 1}`,
         from: fistItem?.name || '',
