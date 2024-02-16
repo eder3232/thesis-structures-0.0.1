@@ -15,7 +15,6 @@ import { cn } from '@/lib/utils'
 
 import { MinusCircle, PlusCircle } from 'lucide-react'
 
-import { atomGetAreDofDefinedByUser } from '../../store/areDofDefinedByUser'
 import {
   atomGetVertices,
   atomSetVerticesAddNewRow,
@@ -25,8 +24,7 @@ import {
   atomSetVerticesString,
   atomSetVerticesSwitchRestricted,
 } from '../../store/vertices'
-
-import SpecialConditions from './specialConditions'
+import { atomGetAreDofDefinedByUser } from '../../store/areDofDefinedByUser'
 import EderInput from '@/components/shared/utils/ederInput'
 
 const VerticesTable = () => {
@@ -39,9 +37,9 @@ const VerticesTable = () => {
   const [, setVerticesSwitchRestricted] = useAtom(
     atomSetVerticesSwitchRestricted
   )
-
   const [, setVerticesAddNewRow] = useAtom(atomSetVerticesAddNewRow)
   const [, setVerticesDeleteRow] = useAtom(atomSetVerticesDeleteRow)
+
   return (
     <div className="max-w-full overflow-x-auto overflow-y-visible md:max-w-min">
       <div className="p-4 bg-muted rounded-lg">
@@ -53,33 +51,34 @@ const VerticesTable = () => {
               <TableHead className="eder-head-text" rowSpan={2}>
                 Nombre
               </TableHead>
-              <TableHead className="eder-head-text" colSpan={2}>
+              <TableHead className="eder-head-text" colSpan={3}>
                 Coordenadas
               </TableHead>
-              <TableHead className="eder-head-text" colSpan={2}>
-                Fuerza
+              <TableHead className="eder-head-text" colSpan={3}>
+                Fuerzas
               </TableHead>
-              <TableHead className="eder-head-text" colSpan={2}>
-                Desplazamiento
+              <TableHead className="eder-head-text" colSpan={3}>
+                Desplazamientos
               </TableHead>
-              <TableHead className="eder-head-text" colSpan={2}>
+              <TableHead className="eder-head-text" colSpan={3}>
                 Restringido
               </TableHead>
               <TableHead className="eder-head-text" rowSpan={2}>
                 Condiciones especiales
               </TableHead>
               {areDofDefinedByUser && (
-                <TableHead className="eder-head-text" colSpan={2}>
-                  Grado de libertad
+                <TableHead className="eder-head-text" colSpan={3}>
+                  Grados de libertad
                 </TableHead>
               )}
             </TableRow>
+
             <TableRow className="[&>*]:text-center [&>*]:py-1 [&>.eder-head-text]:font-bold">
               <TableHead className="text-primary px-0">
                 <Button
                   size="icon"
                   variant="outline"
-                  onClick={() => setVerticesAddNewRow(-1)}
+                  onClick={() => setVerticesAddNewRow({ index: -1 })}
                 >
                   <PlusCircle className="m-auto" />
                 </Button>
@@ -96,23 +95,27 @@ const VerticesTable = () => {
                 </Button>
               </TableHead>
 
-              {/* <TableHead className="eder-head-text"></TableHead> */}
               {/* Coordenadas */}
               <TableHead className="eder-head-text">x</TableHead>
+              <TableHead className="eder-head-text">y</TableHead>
               <TableHead className="eder-head-text">z</TableHead>
               {/* Fuerza */}
               <TableHead className="eder-head-text">x</TableHead>
+              <TableHead className="eder-head-text">y</TableHead>
               <TableHead className="eder-head-text">z</TableHead>
               {/* Desplazamiento */}
               <TableHead className="eder-head-text">x</TableHead>
+              <TableHead className="eder-head-text">y</TableHead>
               <TableHead className="eder-head-text">z</TableHead>
               {/* Restringido */}
               <TableHead className="eder-head-text">x</TableHead>
+              <TableHead className="eder-head-text">y</TableHead>
               <TableHead className="eder-head-text">z</TableHead>
 
               {areDofDefinedByUser && (
                 <>
                   <TableHead className="eder-head-text">x</TableHead>
+                  <TableHead className="eder-head-text">y</TableHead>
                   <TableHead className="eder-head-text">z</TableHead>
                 </>
               )}
@@ -133,7 +136,7 @@ const VerticesTable = () => {
                     size="icon"
                     variant="outline"
                     className="text-primary"
-                    onClick={() => setVerticesAddNewRow(index)}
+                    onClick={() => setVerticesAddNewRow({ index })}
                   >
                     <PlusCircle className="m-auto" />
                   </Button>
@@ -147,7 +150,7 @@ const VerticesTable = () => {
                   >
                     <MinusCircle
                       className="m-auto"
-                      onClick={() => setVerticesDeleteRow(index)}
+                      onClick={() => setVerticesDeleteRow({ index })}
                     />
                   </Button>
                 </TableCell>
@@ -168,18 +171,6 @@ const VerticesTable = () => {
                 </TableCell>
 
                 <TableCell className="text-left whitespace-nowrap">
-                  {/* <Input
-                    type="number"
-                    defaultValue={vertex.coordinateX}
-                    className="w-32"
-                    onBlur={(e) =>
-                      setVerticesNumber({
-                        field: 'coordinateX',
-                        value: e.target.valueAsNumber,
-                        index,
-                      })
-                    }
-                  /> */}
                   <EderInput
                     value={vertex.coordinateX}
                     onChange={(value) =>
@@ -191,19 +182,21 @@ const VerticesTable = () => {
                     }
                   />
                 </TableCell>
+
                 <TableCell className="text-left whitespace-nowrap">
-                  {/* <Input
-                    type="number"
-                    defaultValue={vertex.coordinateZ}
-                    className="w-32"
-                    onBlur={(e) =>
+                  <EderInput
+                    value={vertex.coordinateY}
+                    onChange={(value) =>
                       setVerticesNumber({
-                        field: 'coordinateZ',
-                        value: e.target.valueAsNumber,
+                        field: 'coordinateY',
+                        value,
                         index,
                       })
                     }
-                  /> */}
+                  />
+                </TableCell>
+
+                <TableCell className="text-left whitespace-nowrap">
                   <EderInput
                     value={vertex.coordinateZ}
                     onChange={(value) =>
@@ -217,18 +210,6 @@ const VerticesTable = () => {
                 </TableCell>
 
                 <TableCell className="text-left whitespace-nowrap">
-                  {/* <Input
-                    type="number"
-                    defaultValue={vertex.forceX}
-                    className="w-32"
-                    onBlur={(e) =>
-                      setVerticesNumber({
-                        field: 'forceX',
-                        value: e.target.valueAsNumber,
-                        index,
-                      })
-                    }
-                  /> */}
                   <EderInput
                     value={vertex.forceX}
                     onChange={(value) =>
@@ -238,23 +219,25 @@ const VerticesTable = () => {
                         index,
                       })
                     }
-                    disabled={vertex.isRestrictedX}
+                    disabled={vertex.isRestrainedX}
                   />
                 </TableCell>
 
                 <TableCell className="text-left whitespace-nowrap">
-                  {/* <Input
-                    type="number"
-                    defaultValue={vertex.forceZ}
-                    className="w-32"
-                    onBlur={(e) =>
+                  <EderInput
+                    value={vertex.forceY}
+                    onChange={(value) =>
                       setVerticesNumber({
-                        field: 'forceZ',
-                        value: e.target.valueAsNumber,
+                        field: 'forceY',
+                        value,
                         index,
                       })
                     }
-                  /> */}
+                    disabled={vertex.isRestrainedY}
+                  />
+                </TableCell>
+
+                <TableCell className="text-left whitespace-nowrap">
                   <EderInput
                     value={vertex.forceZ}
                     onChange={(value) =>
@@ -264,23 +247,11 @@ const VerticesTable = () => {
                         index,
                       })
                     }
-                    disabled={vertex.isRestrictedZ}
+                    disabled={vertex.isRestrainedZ}
                   />
                 </TableCell>
 
                 <TableCell className="text-left whitespace-nowrap">
-                  {/* <Input
-                    type="number"
-                    defaultValue={vertex.displacementX}
-                    className="w-32"
-                    onBlur={(e) =>
-                      setVerticesNumber({
-                        field: 'displacementX',
-                        value: e.target.valueAsNumber,
-                        index,
-                      })
-                    }
-                  /> */}
                   <EderInput
                     value={vertex.displacementX}
                     onChange={(value) =>
@@ -290,22 +261,25 @@ const VerticesTable = () => {
                         index,
                       })
                     }
-                    disabled={!vertex.isRestrictedX}
+                    disabled={!vertex.isRestrainedX}
                   />
                 </TableCell>
+
                 <TableCell className="text-left whitespace-nowrap">
-                  {/* <Input
-                    type="number"
-                    defaultValue={vertex.displacementZ}
-                    className="w-32"
-                    onBlur={(e) =>
+                  <EderInput
+                    value={vertex.displacementY}
+                    onChange={(value) =>
                       setVerticesNumber({
-                        field: 'displacementZ',
-                        value: e.target.valueAsNumber,
+                        field: 'displacementY',
+                        value,
                         index,
                       })
                     }
-                  /> */}
+                    disabled={!vertex.isRestrainedY}
+                  />
+                </TableCell>
+
+                <TableCell className="text-left whitespace-nowrap">
                   <EderInput
                     value={vertex.displacementZ}
                     onChange={(value) =>
@@ -315,19 +289,14 @@ const VerticesTable = () => {
                         index,
                       })
                     }
-                    disabled={!vertex.isRestrictedZ}
+                    disabled={!vertex.isRestrainedZ}
                   />
                 </TableCell>
 
                 <TableCell className="text-center">
                   <Checkbox
-                    checked={vertex.isRestrictedX}
+                    checked={vertex.isRestrainedX}
                     onCheckedChange={() =>
-                      // setVerticesBoolean({
-                      //   field: 'isRestrictedX',
-                      //   value: !vertex.isRestrictedX,
-                      //   index,
-                      // })
                       setVerticesSwitchRestricted({
                         axis: 'x',
                         index,
@@ -335,16 +304,22 @@ const VerticesTable = () => {
                     }
                   />
                 </TableCell>
+
                 <TableCell className="text-center">
                   <Checkbox
-                    checked={vertex.isRestrictedZ}
-                    // onCheckedChange={() =>
-                    //   setVerticesBoolean({
-                    //     field: 'isRestrictedZ',
-                    //     value: !vertex.isRestrictedZ,
-                    //     index,
-                    //   })
-                    // }
+                    checked={vertex.isRestrainedY}
+                    onCheckedChange={() =>
+                      setVerticesSwitchRestricted({
+                        axis: 'y',
+                        index,
+                      })
+                    }
+                  />
+                </TableCell>
+
+                <TableCell className="text-center">
+                  <Checkbox
+                    checked={vertex.isRestrainedZ}
                     onCheckedChange={() =>
                       setVerticesSwitchRestricted({
                         axis: 'z',
@@ -354,29 +329,11 @@ const VerticesTable = () => {
                   />
                 </TableCell>
 
-                <TableCell className="text-center">
-                  <SpecialConditions
-                    index={index}
-                    valueX={vertex.isRestrictedX}
-                    valueZ={vertex.isRestrictedZ}
-                  />
-                </TableCell>
+                <TableCell className="text-center">Implementar!</TableCell>
 
                 {areDofDefinedByUser && (
                   <>
                     <TableCell className="text-left whitespace-nowrap">
-                      {/* <Input
-                        type="text"
-                        defaultValue={vertex.userDOFX}
-                        className="w-32"
-                        onBlur={(e) =>
-                          setVerticesNumber({
-                            field: 'userDOFX',
-                            value: e.target.valueAsNumber,
-                            index,
-                          })
-                        }
-                      /> */}
                       <EderInput
                         value={vertex.userDOFX}
                         onChange={(value) =>
@@ -389,18 +346,18 @@ const VerticesTable = () => {
                       />
                     </TableCell>
                     <TableCell className="text-left whitespace-nowrap">
-                      {/* <Input
-                        type="text"
-                        defaultValue={vertex.userDOFZ}
-                        className="w-32"
-                        onBlur={(e) =>
+                      <EderInput
+                        value={vertex.userDOFY}
+                        onChange={(value) =>
                           setVerticesNumber({
-                            field: 'userDOFZ',
-                            value: e.target.valueAsNumber,
+                            field: 'userDOFY',
+                            value,
                             index,
                           })
                         }
-                      /> */}
+                      />
+                    </TableCell>
+                    <TableCell className="text-left whitespace-nowrap">
                       <EderInput
                         value={vertex.userDOFZ}
                         onChange={(value) =>
@@ -418,7 +375,6 @@ const VerticesTable = () => {
             ))}
           </TableBody>
         </Table>
-        {/* <pre>{JSON.stringify(vertices, null, 2)}</pre> */}
       </div>
     </div>
   )
