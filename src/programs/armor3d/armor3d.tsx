@@ -9,8 +9,13 @@ import TypographyH3 from '@/components/typography/typography-h3'
 import AreDofDefinedByUser from './components/areDofDefinedByUser'
 import VerticesTable from './components/verticesTable/verticesTable'
 import EdgesTable from './components/edgesTable/edgesTable'
+import VerticesErrors from './components/errors/verticesErrors'
+import EdgesErrors from './components/errors/edgesErrors'
+import AreRestrictedOnTop from './components/areRestrictedsOnTop'
+import { atomGetErrors } from './store/errors/errors'
 
 const Armor3D = () => {
+  const [errors] = useAtom(atomGetErrors)
   return (
     <div className="flex flex-col gap-4">
       <TypographyH1>Armaduras 3D</TypographyH1>
@@ -26,7 +31,18 @@ const Armor3D = () => {
 
       <EdgesTable />
 
-      <div className="flex flex-col gap-4"></div>
+      <div className="flex flex-col gap-4">
+        <VerticesErrors />
+        <EdgesErrors />
+      </div>
+
+      <div className="flex flex-col gap-4">
+        <TypographyH2>Resultados: </TypographyH2>
+
+        <AreRestrictedOnTop />
+
+        {errors.length === 0 && <div />}
+      </div>
     </div>
   )
 }
