@@ -8,6 +8,7 @@ import { atomGetAreRestrictedOnTop } from './areRestrictedsOnTop'
 import { Vertices } from '../logic/Vertices'
 import { Edges } from '../logic/Edges'
 import { Armor2D } from '../logic/Armor2D'
+import { atomGetAreDofDefinedByUser } from './areDofDefinedByUser'
 
 interface ISpringsResults {
   orderDOF: IOrderDOF[]
@@ -109,12 +110,15 @@ export const atomGetResults = atom<IResponse>((get) => {
   const verticesData = get(atomGetVertices)
   const edgesData = get(atomGetEdges)
   const areRestrictedOnTop = get(atomGetAreRestrictedOnTop)
+  const areDofDefinedByUser = get(atomGetAreDofDefinedByUser)
 
   // Creando la instancia de clase Vertices
 
   // Se entiende que los vertices han sido validados, pero la clase vertices, realiza sus propias validaciones, asi que se controlan estos errores en caso ocurran.
 
-  const vertices = new Vertices()
+  const vertices = new Vertices({
+    userHasDefinedDOF: areDofDefinedByUser,
+  })
 
   verticesData.map((vertex) => {
     try {
