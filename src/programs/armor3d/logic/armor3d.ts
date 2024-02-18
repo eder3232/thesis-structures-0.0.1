@@ -319,10 +319,10 @@ export class Armor3D {
         if (value['isRestricted']) {
           this.f.restricted[
             this.utils.dofPointerInDataArray.get(value.dofInternal)!
-          ][0] = `F-${key}`
+          ][0] = value.force.toString() //`F-${key}`
           this.f.global[
             this.utils.dofPointerInDataArray.get(value.dofInternal)!
-          ][0] = `F-${key}`
+          ][0] = value.force.toString() //`F-${key}`
         } else {
           this.f.unrestricted[
             this.utils.dofPointerInDataArray.get(value.dofInternal)! -
@@ -339,10 +339,10 @@ export class Armor3D {
           this.f.restricted[
             this.utils.dofPointerInDataArray.get(value['dofInternal'])! -
               this.verticesUtils.restrictedDOF
-          ][0] = `F-${key}`
+          ][0] = value.force.toString() //`F-${key}`
           this.f.global[
             this.utils.dofPointerInDataArray.get(value['dofInternal'])!
-          ][0] = `F-${key}`
+          ][0] = value.force.toString() //`F-${key}`
         } else {
           this.f.unrestricted[
             this.utils.dofPointerInDataArray.get(value['dofInternal'])!
@@ -383,11 +383,11 @@ export class Armor3D {
           this.u.unrestricted[
             this.utils.dofPointerInDataArray.get(value['dofInternal'])! -
               this.settings.dofRestricted
-          ][0] = `U-${key}`
+          ][0] = value.displacement.toString() //`U-${key}`
 
           this.u.global[
             this.utils.dofPointerInDataArray.get(value['dofInternal'])!
-          ][0] = `U-${key}`
+          ][0] = value.displacement.toString() //`U-${key}`
         }
       }
     } else {
@@ -404,11 +404,11 @@ export class Armor3D {
         } else {
           this.u.unrestricted[
             this.utils.dofPointerInDataArray.get(value['dofInternal'])!
-          ][0] = `U-${key}`
+          ][0] = value.displacement.toString() //`U-${key}`
 
           this.u.global[
             this.utils.dofPointerInDataArray.get(value['dofInternal'])!
-          ][0] = `U-${key}`
+          ][0] = value.displacement.toString() //`U-${key}`
         }
       }
     }
