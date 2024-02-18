@@ -23,7 +23,6 @@ const Locals = ({ locals }: Props) => {
     withoutEa_globalCoordinates: true,
     local_globalCoordinates: true,
     tableDOF: true,
-    //TODO: Cambiar a true, false solo para desarrollo
     all: true,
   })
 
@@ -227,24 +226,24 @@ const Locals = ({ locals }: Props) => {
                       locales a globales:
                     </p>
                     <div className="overflow-x-auto relative">
-                      <div className="min-w-min flex items-center">
+                      <div className="min-w-min flex flex-col gap-4">
                         {showLocal.withoutEa_localCoordinates && (
-                          <>
+                          <div className="flex items-center">
                             <div className="mx-4 text-3xl whitespace-nowrap">
                               <InlineMath
                                 math={`
-                          A
-                          =
-                          \\begin{bmatrix}
-                          C_\\alpha & 0\\\\
-                          C_\\beta & 0\\\\
-                          C_\\theta & 0\\\\
-                          0 & C_\\alpha\\\\
-                          0 & C_\\beta\\\\
-                          0 & C_\\theta\\\\
-                          \\end{bmatrix}
-                          =
-                          `}
+                                      A
+                                      =
+                                      \\begin{bmatrix}
+                                      C_\\alpha & 0\\\\
+                                      C_\\beta & 0\\\\
+                                      C_\\theta & 0\\\\
+                                      0 & C_\\alpha\\\\
+                                      0 & C_\\beta\\\\
+                                      0 & C_\\theta\\\\
+                                      \\end{bmatrix}
+                                      =
+                                      `}
                               />
                             </div>
                             <TwoDimensionalArray
@@ -252,11 +251,11 @@ const Locals = ({ locals }: Props) => {
                               name="A"
                               caption="Matriz de transformación"
                             />
-                          </>
+                          </div>
                         )}
 
                         {showLocal.transformTransposed && (
-                          <>
+                          <div className="flex items-center">
                             <div className="mx-4 text-3xl whitespace-nowrap">
                               <InlineMath
                                 math={`
@@ -275,7 +274,7 @@ const Locals = ({ locals }: Props) => {
                               name="A^T"
                               caption="Matriz de transformación transpuesta"
                             />
-                          </>
+                          </div>
                         )}
                       </div>
                     </div>
@@ -300,8 +299,7 @@ const Locals = ({ locals }: Props) => {
                             <TwoDimensionalArray
                               arr={value.globalCoordinates_withoutEa}
                               name="L - L - sin EA"
-                              caption="Matriz local de rigidez en coordenadas globales sin el factor
-                          EA"
+                              caption="Matriz local de rigidez en coordenadas globales sin el factor EA"
                             />
                           </>
                         )}
