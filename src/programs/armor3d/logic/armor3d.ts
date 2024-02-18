@@ -1,10 +1,10 @@
-import { IEdge, IEdgesGetData } from './edges'
-import { IVertex, IVerticesSettings, IVerticesUtils } from './vertices'
+import { IEdge, IEdgesGetData } from './Edges'
+import { IVertex, IVerticesSettings, IVerticesUtils } from './Vertices'
 import { add, inv, multiply, subtract, transpose, zeros } from 'mathjs'
 import { twoDimensionalArray } from '../utils/twoDimensionalArray'
 import { tablePrinter } from '../utils/printer'
 
-interface ILocalArrays {
+export interface ILocalArrays {
   transform: number[][]
   transformTransposed: number[][]
   localCoordinates_withoutEa: number[][]
@@ -12,6 +12,13 @@ interface ILocalArrays {
   globalCoordinates_withoutEa: number[][]
   globalCoordinates_complete: number[][]
   tableDOF: number[]
+}
+
+export interface IOrderDOF {
+  name: string
+  isRestricted: boolean
+  dof_internal: number
+  dof_user: number
 }
 
 interface IDataArray {
@@ -40,12 +47,7 @@ export class Armor3D {
   }
 
   utils: {
-    orderOfDOF: {
-      name: string
-      isRestricted: boolean
-      dof_internal: number
-      dof_user: number
-    }[]
+    orderOfDOF: IOrderDOF[]
     dofPointerInDataArray: Map<number, number>
   } = {
     orderOfDOF: [],
@@ -506,7 +508,7 @@ export class Armor3D {
       return {
         ok: false,
         message: 'La matriz kuu no tiene inversa, verifica los datos.',
-        uSolved: [],
+        uuSolved: [],
       }
     }
 
@@ -517,7 +519,7 @@ export class Armor3D {
 
     // console.log('uSolved')
     // tablePrinter(this.solved.u.unrestricted, 4)
-    return { uSolved: this.solved.u.unrestricted, ok: true, message: '' }
+    return { uuSolved: this.solved.u.unrestricted, ok: true, message: '' }
   }
 
   solveForces() {

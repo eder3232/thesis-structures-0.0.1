@@ -70,6 +70,7 @@ export class Vertices {
   constructor({ userHasDefinedDOF }: { userHasDefinedDOF: boolean }) {
     this.settings.userHasDefinedDOF = userHasDefinedDOF
   }
+
   add({
     id,
     coordinates,
@@ -124,15 +125,30 @@ export class Vertices {
     }
 
     const DOF = {
-      x: { internal: 0, user: userDOF!['x'] },
-      y: { internal: 0, user: userDOF!['y'] },
-      z: { internal: 0, user: userDOF!['z'] },
+      x: { internal: 0, user: 0 },
+      y: { internal: 0, user: 0 },
+      z: { internal: 0, user: 0 },
     }
+    // const DOF = {
+    //   x: { internal: 0, user: userDOF['x'] },
+    //   y: { internal: 0, user: userDOF['y'] },
+    //   z: { internal: 0, user: userDOF['z'] },
+    // }
 
     const enumerator = this.data.size * this.utils.axis.length
 
     for (const [index, element] of this.utils.axis.entries()) {
       DOF[element].internal = enumerator + index
+    }
+
+    if (this.settings.userHasDefinedDOF && userDOF) {
+      for (const axis of this.utils.axis) {
+        DOF[axis].user = userDOF[axis]
+      }
+    } else {
+      for (const axis of this.utils.axis) {
+        DOF[axis].user = DOF[axis].internal + 1
+      }
     }
 
     this.data.set(id, {
