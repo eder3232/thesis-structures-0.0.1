@@ -38,40 +38,42 @@ const EdgesTable = () => {
       <div className="p-4 bg-muted rounded-lg">
         <Table className="border">
           <TableHeader className="[&>*]:text-center [&>*]:py-1 [&>.eder-head-text]:font-bold">
-            <TableHead className="text-primary px-0">
-              <Button
-                size="icon"
-                variant="outline"
-                onClick={() => setEdgesAddNewRow({ index: -1 })}
-              >
-                <PlusCircle className="m-auto" />
-              </Button>
-            </TableHead>
+            <TableRow>
+              <TableHead className="text-primary px-0">
+                <Button
+                  size="icon"
+                  variant="outline"
+                  onClick={() => setEdgesAddNewRow({ index: -1 })}
+                >
+                  <PlusCircle className="m-auto" />
+                </Button>
+              </TableHead>
 
-            <TableHead className="px-0">
-              <Button
-                size="icon"
-                variant="outline"
-                disabled
-                className="disabled:text-muted-foreground"
-              >
-                <MinusCircle className="m-auto" />
-              </Button>
-            </TableHead>
+              <TableHead className="px-0">
+                <Button
+                  size="icon"
+                  variant="outline"
+                  disabled
+                  className="disabled:text-muted-foreground"
+                >
+                  <MinusCircle className="m-auto" />
+                </Button>
+              </TableHead>
 
-            <TableHead className="eder-head-text">Nombre</TableHead>
+              <TableHead className="eder-head-text">Nombre</TableHead>
 
-            <TableHead className="eder-head-text whitespace-nowrap">
-              Viene de
-            </TableHead>
+              <TableHead className="eder-head-text whitespace-nowrap">
+                Viene de
+              </TableHead>
 
-            <TableHead className="eder-head-text whitespace-nowrap">
-              Va hacia
-            </TableHead>
+              <TableHead className="eder-head-text whitespace-nowrap">
+                Va hacia
+              </TableHead>
 
-            <TableHead className="eder-head-text">Elasticidad</TableHead>
+              <TableHead className="eder-head-text">Elasticidad</TableHead>
 
-            <TableHead className="eder-head-text">Area</TableHead>
+              <TableHead className="eder-head-text">Area</TableHead>
+            </TableRow>
           </TableHeader>
 
           <TableBody>
