@@ -13,6 +13,7 @@ import { IOrderDOF } from '../../logic/Armor3D'
 interface Props {
   orderOfDof: IOrderDOF[]
 }
+
 const OrderOfDof = ({ orderOfDof }: Props) => {
   return (
     <div className="max-w-min overflow-x-auto">

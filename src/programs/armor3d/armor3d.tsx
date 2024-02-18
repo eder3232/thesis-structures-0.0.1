@@ -13,6 +13,7 @@ import VerticesErrors from './components/errors/verticesErrors'
 import EdgesErrors from './components/errors/edgesErrors'
 import AreRestrictedOnTop from './components/areRestrictedsOnTop'
 import { atomGetErrors } from './store/errors/errors'
+import Results from './components/results/results'
 
 const Armor3D = () => {
   const [errors] = useAtom(atomGetErrors)
@@ -41,7 +42,7 @@ const Armor3D = () => {
 
         <AreRestrictedOnTop />
 
-        {errors.length === 0 && <div />}
+        {errors.length === 0 && <Results />}
       </div>
     </div>
   )
