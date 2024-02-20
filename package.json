@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:generate": "drizzle-kit generate:pg --schema ./src/db/schema.ts --out=./src/db/migrations",
+    "db:migrate": "npx tsx ./src/db/scripts/migrate.ts",
+    "db:seed": "npx tsx ./src/db/seed.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
