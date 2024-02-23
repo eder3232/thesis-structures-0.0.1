@@ -14,8 +14,8 @@ interface IGraficoArmor2DProps {
 const Graph2D = ({ lines, points }: IGraficoArmor2DProps) => {
   return (
     <Canvas
-      className="bg-green-200"
-      style={{ height: '500px', width: '500px' }}
+      className="bg-green-100"
+      // style={{ height: '500px', width: '500px' }}
     >
       <Content points={points} lines={lines} />
     </Canvas>

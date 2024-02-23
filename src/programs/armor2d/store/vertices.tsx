@@ -219,3 +219,5 @@ export const atomSetVerticesResetDofs = atom(
     )
   }
 )
+
+//TODO: Fixear bug, al eliminar un vertice, se eliminan los DOF de los vertices restantes, pero no se actualizan los DOF de los vertices restantes.
