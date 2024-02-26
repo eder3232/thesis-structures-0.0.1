@@ -23,21 +23,21 @@ const RollerSuport = ({ size, sphereSize, applicationPoint }: Props) => {
         args={[size / 4]}
         position={[-size / 2, -coneHeight - size / 4 - sphereSize, 0]}
       >
-        <meshBasicMaterial color="blue" />
+        <meshBasicMaterial color="red" />
       </Sphere>
 
       <Sphere
         args={[size / 4]}
         position={[0, -coneHeight - size / 4 - sphereSize, 0]}
       >
-        <meshBasicMaterial color="blue" />
+        <meshBasicMaterial color="red" />
       </Sphere>
 
       <Sphere
         args={[size / 4]}
         position={[size / 2, -coneHeight - size / 4 - sphereSize, 0]}
       >
-        <meshBasicMaterial color="blue" />
+        <meshBasicMaterial color="red" />
       </Sphere>
     </group>
   )

@@ -1,10 +1,10 @@
-import { Cone, Cylinder } from '@react-three/drei'
-
+import { Cone, Cylinder, Text, Text3D, Html } from '@react-three/drei'
 interface Props {
   applicationPoint: [number, number, number]
   directorCosines: [number, number, number]
   arrowSize: number
   sphereSize: number
+  forceValue: number
 }
 
 const Arrow = ({
@@ -12,6 +12,7 @@ const Arrow = ({
   directorCosines,
   arrowSize,
   sphereSize,
+  forceValue,
 }: Props) => {
   const cilinderHeight = arrowSize * 0.7
   const cilinderWidth = arrowSize * 0.025
@@ -39,6 +40,13 @@ const Arrow = ({
       >
         <meshBasicMaterial color="green" />
       </Cone>
+
+      {/* <Text>asdf</Text> */}
+      {/* 
+      <Text3D size={1} font={'./2.json'}>
+        eder!
+        <meshNormalMaterial />
+      </Text3D> */}
     </group>
   )
 }
