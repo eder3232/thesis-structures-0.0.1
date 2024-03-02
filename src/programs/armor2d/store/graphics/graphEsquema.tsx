@@ -13,11 +13,18 @@ export type IForce = {
   directorCosines: ICoordinate3D
 }
 
+export type IReaction = {
+  reactionType: 'rollerSuport' | 'articulatedSuport'
+  applicationPoint: ICoordinate3D
+  directorCosines: ICoordinate3D
+}
+
 interface IResponse {
   status: IStatus
   points: Array<ICoordinate3D>
   lines: [ICoordinate3D, ICoordinate3D][]
   forces: IForce[]
+  reactions: IReaction[]
 }
 
 export const atomGetGraph = atom<IResponse>((get) => {
@@ -26,6 +33,7 @@ export const atomGetGraph = atom<IResponse>((get) => {
     points: [],
     lines: [],
     forces: [],
+    reactions: [],
   }
 
   const getErrors = get(atomGetErrors)
@@ -100,6 +108,30 @@ export const atomGetGraph = atom<IResponse>((get) => {
   })
 
   response.forces = forces
+
+  const reactions: IReaction[] = []
+
+  vertices.map((vertex) => {
+    let existSuport = true
+    const obj: IReaction = {
+      reactionType: 'rollerSuport',
+      applicationPoint: [vertex.coordinateX, vertex.coordinateZ, 0],
+      directorCosines: [0, 0, 0],
+    }
+    if (vertex.isRestrictedX && vertex.isRestrictedZ) {
+      obj.reactionType = 'articulatedSuport'
+    } else if (vertex.isRestrictedX) {
+      obj.directorCosines = [0, 0, 90]
+    } else if (vertex.isRestrictedZ) {
+      obj.directorCosines = [0, 0, 0]
+    } else {
+      existSuport = false
+    }
+
+    if (existSuport) reactions.push(obj)
+  })
+
+  response.reactions = reactions
 
   return response
 })

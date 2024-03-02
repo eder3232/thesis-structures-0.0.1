@@ -1,8 +1,22 @@
-import { Line, OrthographicCamera } from '@react-three/drei'
+import {
+  Cylinder,
+  Line,
+  OrbitControls,
+  OrthographicCamera,
+  PerspectiveCamera,
+  Sphere,
+} from '@react-three/drei'
 import { Canvas, useThree } from '@react-three/fiber'
 import { useAtom } from 'jotai'
 import { useRef } from 'react'
-import { atomGetGraph } from '../../store/graphics/graphEsquema'
+import {
+  IForce,
+  IReaction,
+  atomGetGraph,
+} from '../../store/graphics/graphEsquema'
+import Arrow from './arrow'
+import RollerSuport from './rollerSuport'
+import ArticulatedSuport from './articulatedSuport'
 
 const Graphic2D = () => {
   const [graph] = useAtom(atomGetGraph)
@@ -11,9 +25,14 @@ const Graphic2D = () => {
 
   // console.log(graph)
   return (
-    <div className="w-80 md:w-[500px] bg-green-100 h-80 md:h-[500px]">
+    <div className="w-80 md:w-[500px] bg-primary/10 h-80 md:h-[500px]">
       <Canvas>
-        <Content points={graph.points} lines={graph.lines} />
+        <Content
+          points={graph.points}
+          lines={graph.lines}
+          forces={graph.forces}
+          reactions={graph.reactions}
+        />
       </Canvas>
     </div>
   )
@@ -22,9 +41,16 @@ const Graphic2D = () => {
 interface IGraficoArmor2DProps {
   points: Array<[number, number, number]>
   lines: Array<Array<[number, number, number]>>
+  forces: IForce[]
+  reactions: IReaction[]
 }
 
-const Content = ({ lines, points }: IGraficoArmor2DProps) => {
+const Content = ({
+  lines,
+  points,
+  forces,
+  reactions,
+}: IGraficoArmor2DProps) => {
   const { size, viewport } = useThree()
   const aspect = size.width / size.height
   // const aspect = size.width / viewport.width
@@ -40,8 +66,12 @@ const Content = ({ lines, points }: IGraficoArmor2DProps) => {
   const width = maxX - minX
   const height = maxY - minY
 
+  const maxReferencialValue = Math.max(width, height)
+
   const zoom =
-    Math.min(size.width / (width * aspect), size.height / height) * 0.8
+    Math.min(size.width / (width * aspect), size.height / height) * 0.6
+
+  const sphereSize = maxReferencialValue / 50
 
   // useFrame(() => {
   //   if (camera.current) {
@@ -53,6 +83,8 @@ const Content = ({ lines, points }: IGraficoArmor2DProps) => {
   //     console.log('raa')
   //   }
   // })
+
+  // console.log(reactions)
 
   return (
     <>
@@ -71,15 +103,15 @@ const Content = ({ lines, points }: IGraficoArmor2DProps) => {
         near={1}
         // ref={camera}
       />
-
-      {/* <PerspectiveCamera
+      {/* 
+      <PerspectiveCamera
         ref={camera}
         makeDefault
         position={[centerX, centerY, 20]}
         zoom={1}
       /> */}
 
-      <axesHelper args={[3]} />
+      {/* <axesHelper args={[3]} /> */}
       {/* <OrbitControls /> */}
 
       <group>
@@ -88,17 +120,64 @@ const Content = ({ lines, points }: IGraficoArmor2DProps) => {
             key={index}
             points={line}
             color="black"
-            lineWidth={3}
+            lineWidth={2}
             dashed={false}
           />
         ))}
 
         {points.map((point, index) => (
-          <mesh position={point} key={index}>
-            <sphereGeometry args={[0.1, 16, 16]} />
-            <meshBasicMaterial color="red" />
-          </mesh>
+          <Sphere key={index} position={point} args={[sphereSize]}>
+            <meshBasicMaterial color="purple" />
+          </Sphere>
         ))}
+
+        {forces.map((force, index) => (
+          <Arrow
+            key={index}
+            applicationPoint={force.applicationPoint}
+            directorCosines={force.directorCosines}
+            arrowSize={1}
+            sphereSize={sphereSize}
+            forceValue={force.forceValue}
+          />
+        ))}
+
+        {reactions.map((reaction, index) => (
+          <>
+            {reaction.reactionType === 'rollerSuport' && (
+              <RollerSuport
+                key={index}
+                applicationPoint={reaction.applicationPoint}
+                directorCosines={reaction.directorCosines}
+                sphereSize={sphereSize}
+                size={0.4}
+              />
+            )}
+            {reaction.reactionType === 'articulatedSuport' && (
+              <ArticulatedSuport
+                key={index}
+                applicationPoint={reaction.applicationPoint}
+                directorCosines={reaction.directorCosines}
+                sphereSize={sphereSize}
+                size={0.4}
+              />
+            )}
+          </>
+        ))}
+
+        {/* <RollerSuport
+          applicationPoint={[3, 0, 0]}
+          directorCosines={[0, 0, 180]}
+          sphereSize={sphereSize}
+          size={0.4}
+        /> */}
+
+        {/* <ArticulatedSuport
+          applicationPoint={[0, 0, 0]}
+          directorCosines={[0, 0, 180]}
+          sphereSize={sphereSize}
+          size={0.4}
+        /> */}
       </group>
     </>
   )

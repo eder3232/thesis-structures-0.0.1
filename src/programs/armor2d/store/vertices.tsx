@@ -3,6 +3,7 @@ import { IInputReactVertices } from '../interfaces/vertices'
 import { initialVerticesData } from '../data/data1'
 import { produce } from 'immer'
 import { v4 as uuidv4 } from 'uuid'
+import { atomGetAreRestrictedOnTop } from './areRestrictedsOnTop'
 
 const atomVertices = atom<IInputReactVertices[]>(initialVerticesData)
 
@@ -156,6 +157,9 @@ export const atomSetVerticesDeleteRow = atom(
         draft.splice(index, 1)
       })
     )
+    set(atomSetVerticesResetDofs, {
+      areRestrictedOnTop: _get(atomGetAreRestrictedOnTop),
+    })
   }
 )
 
