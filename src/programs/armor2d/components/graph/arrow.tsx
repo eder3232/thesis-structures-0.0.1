@@ -1,8 +1,8 @@
-import { Cone, Cylinder, FontData, Text3D } from '@react-three/drei'
+import { Cone, Cylinder, FontData, Text3D, useFont } from '@react-three/drei'
 
-import font from '../../../../../public/font/Anta_Regular.json'
-const fontUnk = font as unknown
-const fontTyped = fontUnk as FontData
+// import font from '../../../../../public/font/Anta_Regular.json'
+// const fontUnk = font as unknown
+// const fontTyped = fontUnk as FontData
 
 interface Props {
   applicationPoint: [number, number, number]
@@ -19,6 +19,7 @@ const Arrow = ({
   sphereSize,
   forceValue,
 }: Props) => {
+  const font2 = useFont('/font/Anta_Regular.json')
   const cilinderHeight = arrowSize * 0.7
   const cilinderWidth = arrowSize * 0.025
   const coneHeight = arrowSize * 0.3
@@ -52,7 +53,8 @@ const Arrow = ({
 
       <Text3D
         size={textHeight}
-        font={fontTyped}
+        font={font2.data}
+        // font={fontTyped}
         position={[
           -textOffset,
           -cilinderHeight / 2 - coneHeight - sphereSize,
