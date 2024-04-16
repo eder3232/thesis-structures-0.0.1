@@ -32,6 +32,10 @@ export interface IOrderDOF {
   dof_internal: number
 }
 
+interface ISolvedEdges {
+  u: number[]
+}
+
 export class Armor2D {
   verticesUtils: IVerticesUtils
   vertices: Map<string, IVertex>
@@ -87,6 +91,9 @@ export class Armor2D {
       restricted: number[][]
       global: number[][]
     }
+    edges: {
+      [key: string]: ISolvedEdges
+    }
   } = {
     f: {
       restricted: [],
@@ -96,6 +103,7 @@ export class Armor2D {
       unrestricted: [],
       global: [],
     },
+    edges: {},
   }
 
   constructor(edgesData: IEdgesGetData) {
@@ -523,5 +531,56 @@ export class Armor2D {
     // console.log('fSolved')
     // tablePrinter(this.solved.f.restricted, 6)
     return this.solved.f.restricted
+  }
+
+  joinGlobalForces() {
+    if (this.settings.isRestrictedAbove) {
+      this.solved.f.global = [
+        ...this.solved.f.restricted,
+        ...this.f.unrestricted,
+      ]
+    } else {
+      this.solved.f.global = [
+        ...this.f.unrestricted,
+        ...this.solved.f.restricted,
+      ]
+    }
+
+    return this.solved.f.global
+  }
+
+  joinGlobalDisplacements() {
+    if (this.settings.isRestrictedAbove) {
+      this.solved.u.global = [
+        ...this.u.restricted,
+        ...this.solved.u.unrestricted,
+      ]
+    } else {
+      this.solved.u.global = [
+        ...this.solved.u.unrestricted,
+        ...this.u.restricted,
+      ]
+    }
+
+    return this.solved.u.global
+  }
+
+  addDisplacementForEachEdge() {
+    for (const [key, value] of this.edges) {
+      const obj: ISolvedEdges = {
+        u: [],
+      }
+
+      for (const DOF of value.DOF.table) {
+        obj.u.push(
+          this.solved.u.global[
+            this.utils.dofPointerInDataArray.get(DOF.internal) as number
+          ][0]
+        )
+      }
+
+      this.solved.edges[key] = obj
+    }
+    return this.solved.edges
   }
 }

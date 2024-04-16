@@ -2,10 +2,9 @@ import { atom } from 'jotai'
 import { atomGetErrors } from '../errors/errors'
 import { atomGetVertices } from '../vertices'
 import { atomGetEdges } from '../edges'
+import { ICoordinate3D } from '../../interfaces/utils'
 
 type IStatus = 'prevalidationError' | 'ok'
-
-type ICoordinate3D = [number, number, number]
 
 export type IForce = {
   forceValue: number

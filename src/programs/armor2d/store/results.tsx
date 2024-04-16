@@ -248,5 +248,11 @@ export const atomGetResults = atom<IResponse>((get) => {
     })
   }
 
+  // response.results.
+
+  console.log(armor2D.joinGlobalForces())
+  console.log(armor2D.joinGlobalDisplacements())
+  console.log(armor2D.addDisplacementForEachEdge())
+
   return response
 })
