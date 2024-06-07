@@ -13,8 +13,8 @@ import EdgesErrors from './components/errors/edgesErrors'
 import VerticesErrors from './components/errors/verticesErrors'
 import Results from './components/results/results'
 import VerticesTable from './components/verticesTable/verticesTable'
+import Graphic2D from './components/graphs/graphEsquema/graphic2D'
 
-import Graphic2D from './components/graph/graphic2D'
 import { atomGetErrors } from './store/errors/errors'
 
 const Armor2D = () => {

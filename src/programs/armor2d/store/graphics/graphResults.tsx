@@ -7,7 +7,7 @@ import { ICoordinate3D } from '../../interfaces/utils'
 
 type IStatus = 'prevalidationError' | 'calculationError' | 'ok'
 
-interface IBar {
+export interface IBar {
   name: string
   force: number
   state: 'compression' | 'tension' | 'zero'
@@ -19,6 +19,16 @@ interface IResponse {
   points: Array<ICoordinate3D>
   lines: IBar[]
 }
+
+const calculateBarState = (
+  force: number
+): 'compression' | 'tension' | 'zero' => {
+  const minForce = 0.00001
+  if (force < 0 && Math.abs(force) > minForce) return 'compression'
+  if (force > 0 && Math.abs(force) > minForce) return 'tension'
+  return 'zero'
+}
+
 export const atomGetGraphResults = atom<IResponse>((get) => {
   const response: IResponse = {
     status: 'ok',
@@ -48,6 +58,26 @@ export const atomGetGraphResults = atom<IResponse>((get) => {
     vertex.coordinateZ,
     0,
   ])
+
+  response.lines = edges.map((edge) => ({
+    name: edge.name,
+    force: results.results.utils.internalForces.get(edge.name)!.internalForce,
+    state: calculateBarState(
+      results.results.utils.internalForces.get(edge.name)!.internalForce
+    ),
+    coordinates: [
+      [
+        vertices.find((vertex) => vertex.name === edge.from)!.coordinateX,
+        vertices.find((vertex) => vertex.name === edge.from)!.coordinateZ,
+        0,
+      ],
+      [
+        vertices.find((vertex) => vertex.name === edge.to)!.coordinateX,
+        vertices.find((vertex) => vertex.name === edge.to)!.coordinateZ,
+        0,
+      ],
+    ],
+  }))
 
   return response
 })

@@ -10,7 +10,7 @@ import { Edges } from '../logic/Edges'
 import { Armor2D } from '../logic/Armor2D'
 import { atomGetAreDofDefinedByUser } from './areDofDefinedByUser'
 
-interface ISpringsResults {
+interface IArmor2DResults {
   orderDOF: IOrderDOF[]
   locals: Map<string, ILocalArrays>
   utils: {
@@ -21,9 +21,9 @@ interface ISpringsResults {
     internalForces: Map<
       string,
       {
-        u_i: number
-        u_j: number
-        k: number
+        // u_i: number
+        // u_j: number
+        // k: number
         internalForce: number
       }
     >
@@ -61,7 +61,7 @@ interface IResponse {
 
   errors: IErrorLogic[]
 
-  results: ISpringsResults
+  results: IArmor2DResults
 }
 
 export const atomGetResults = atom<IResponse>((get) => {
@@ -237,6 +237,12 @@ export const atomGetResults = atom<IResponse>((get) => {
   if (ok) {
     response.results.u.solved = uuSolved
     response.results.f.solved = armor2D.solveForces()
+
+    console.log(armor2D.joinGlobalForces())
+    console.log(armor2D.joinGlobalDisplacements())
+    console.log(armor2D.addDisplacementForEachEdge())
+
+    response.results.utils.internalForces = armor2D.calculateInternalForces()
   } else {
     response.status = 'inverseMatrixError'
     response.errors.push({
@@ -249,10 +255,6 @@ export const atomGetResults = atom<IResponse>((get) => {
   }
 
   // response.results.
-
-  console.log(armor2D.joinGlobalForces())
-  console.log(armor2D.joinGlobalDisplacements())
-  console.log(armor2D.addDisplacementForEachEdge())
 
   return response
 })

@@ -13,7 +13,7 @@ import {
   IForce,
   IReaction,
   atomGetGraph,
-} from '../../store/graphics/graphEsquema'
+} from '../../../store/graphics/graphEsquema'
 import Arrow from './arrow'
 import RollerSuport from './rollerSuport'
 import ArticulatedSuport from './articulatedSuport'
