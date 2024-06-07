@@ -9,15 +9,22 @@ type IStatus = 'prevalidationError' | 'calculationError' | 'ok'
 
 export interface IBar {
   name: string
-  force: number
+  forceValue: number
   state: 'compression' | 'tension' | 'zero'
   coordinates: [ICoordinate3D, ICoordinate3D]
+}
+
+export interface IReactionForGraphic {
+  applicationPoint: ICoordinate3D
+  axis: string
+  value: number
 }
 
 interface IResponse {
   status: IStatus
   points: Array<ICoordinate3D>
   lines: IBar[]
+  reactions: IReactionForGraphic[]
 }
 
 const calculateBarState = (
@@ -34,6 +41,7 @@ export const atomGetGraphResults = atom<IResponse>((get) => {
     status: 'ok',
     points: [],
     lines: [],
+    reactions: [],
   }
 
   const getErrors = get(atomGetErrors)
@@ -43,41 +51,63 @@ export const atomGetGraphResults = atom<IResponse>((get) => {
     return response
   }
 
-  const vertices = get(atomGetVertices)
-  const edges = get(atomGetEdges)
-
   const results = get(atomGetResults)
+  // const edges = get(atomGetEdges)
+  const edges = results.data.edges
+  // const vertices = get(atomGetVertices)
+  const vertices = results.data.vertices
 
   if (results.status !== 'ok') {
     response.status = 'calculationError'
     return response
   }
 
-  response.points = vertices.map((vertex) => [
-    vertex.coordinateX,
-    vertex.coordinateZ,
+  // response.points = vertices.map((vertex) => [
+  //   vertex.coordinateX,
+  //   vertex.coordinateZ,
+  //   0,
+  // ])
+
+  response.points = Array.from(vertices.values()).map((vertex) => [
+    vertex.coordinates.x,
+    vertex.coordinates.z,
     0,
   ])
 
-  response.lines = edges.map((edge) => ({
-    name: edge.name,
-    force: results.results.utils.internalForces.get(edge.name)!.internalForce,
+  response.lines = Array.from(edges.values()).map((edge) => ({
+    name: edge.id,
+    forceValue: results.results.utils.internalForces.get(edge.id)!
+      .internalForce,
     state: calculateBarState(
-      results.results.utils.internalForces.get(edge.name)!.internalForce
+      results.results.utils.internalForces.get(edge.id)!.internalForce
     ),
     coordinates: [
-      [
-        vertices.find((vertex) => vertex.name === edge.from)!.coordinateX,
-        vertices.find((vertex) => vertex.name === edge.from)!.coordinateZ,
-        0,
-      ],
-      [
-        vertices.find((vertex) => vertex.name === edge.to)!.coordinateX,
-        vertices.find((vertex) => vertex.name === edge.to)!.coordinateZ,
-        0,
-      ],
+      [edge.coordinates.xi, edge.coordinates.zi, 0],
+      [edge.coordinates.xj, edge.coordinates.zj, 0],
     ],
   }))
+
+  // reacciones:
+  const reactions: IReactionForGraphic[] = []
+
+  Array.from(vertices.values()).map((vertex) => {
+    results.data.utils.axisDOF.map((axis) => {
+      if (vertex.isRestricted[axis]) {
+        reactions.push({
+          applicationPoint: [vertex.coordinates.x, vertex.coordinates.z, 0],
+          axis: axis,
+          value:
+            results.results.f.globalSolved[
+              results.results.utils.dofPointerInDataArray.get(
+                vertex.DOF[axis].internal
+              )!
+            ][0],
+        })
+      }
+    })
+  })
+
+  response.reactions = reactions
 
   return response
 })

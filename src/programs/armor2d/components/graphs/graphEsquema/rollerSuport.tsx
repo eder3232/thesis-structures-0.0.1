@@ -16,7 +16,7 @@ const RollerSuport = ({ size, sphereSize, applicationPoint }: Props) => {
         position={[0, -coneHeight / 2 - sphereSize, 0]}
         rotation={[0, Math.PI / 4, 0]}
       >
-        <meshBasicMaterial color="blue" />
+        <meshBasicMaterial color="gray" />
       </Cone>
 
       <Sphere

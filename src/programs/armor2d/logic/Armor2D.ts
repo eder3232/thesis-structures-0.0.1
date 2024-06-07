@@ -583,4 +583,58 @@ export class Armor2D {
     }
     return this.solved.edges
   }
+
+  calculateInternalForces() {
+    // const internalForces: { [key: string]: { internalForce: number } } = {}
+    const internalForces: Map<string, { internalForce: number }> = new Map()
+    for (const [key, value] of this.edges) {
+      // console.log(this.localArrays.get(key)!.local_globalCoordinates)
+
+      // console.log(this.localArrays.get(key)!.transformTransposed)
+
+      // console.log('multiplicacion!')
+      // console.log(
+      //   multiply(
+      //     this.localArrays.get(key)!.transformTransposed, // 2x4
+      //     this.localArrays.get(key)!.local_globalCoordinates // 4x4
+      //   ) // 2x4
+      // )
+
+      // console.log(this.solved.edges[key].u)
+      // console.log('final')
+      // console.log(
+      //   multiply(
+      //     this.solved.edges[key].u, //1x4
+      //     multiply(
+      //       this.localArrays.get(key)!.transformTransposed, // 2x4
+      //       this.localArrays.get(key)!.local_globalCoordinates // 4x4
+      //     ) // 2x4
+      //   )
+      // )
+
+      const fuerzasInternas = multiply(
+        multiply(
+          this.localArrays.get(key)!.local_localCoordinates,
+          this.localArrays.get(key)!.transformTransposed
+        ),
+        this.solved.edges[key].u
+      )
+
+      const internalForce = multiply(
+        [[-value.cos, -value.sin, value.cos, value.sin]],
+        this.solved.edges[key].u.map((x) => [x])
+      )
+
+      // const probando=multiply(this.localArrays.get(key)!.local_localCoordinates,)
+
+      // console.log(fuerzasInternas)
+
+      const res = {
+        internalForce: value.ea_l * internalForce[0][0],
+      }
+
+      internalForces.set(key, res)
+    }
+    return internalForces
+  }
 }

@@ -143,7 +143,7 @@ const Content = ({
         ))}
 
         {reactions.map((reaction, index) => (
-          <>
+          <group key={index}>
             {reaction.reactionType === 'rollerSuport' && (
               <RollerSuport
                 key={index}
@@ -162,7 +162,7 @@ const Content = ({
                 size={0.4}
               />
             )}
-          </>
+          </group>
         ))}
 
         {/* <RollerSuport

@@ -26,7 +26,7 @@ const Arrow = ({
   const coneWidth = arrowSize * 0.1
 
   const textHeight = arrowSize * 0.15
-  const textOffset = arrowSize * 0.1
+  const textOffset = arrowSize * 0.25
 
   return (
     <group
@@ -41,20 +41,19 @@ const Arrow = ({
         args={[cilinderWidth, cilinderWidth, cilinderHeight]}
         position={[0, -cilinderHeight / 2 - coneHeight - sphereSize, 0]}
       >
-        <meshBasicMaterial color="green" />
+        <meshBasicMaterial color="blue" />
       </Cylinder>
 
       <Cone
         args={[coneWidth, coneHeight]}
         position={[0, -coneHeight / 2 - sphereSize, 0]}
       >
-        <meshBasicMaterial color="green" />
+        <meshBasicMaterial color="blue" />
       </Cone>
 
       <Text3D
         size={textHeight}
         font={font2.data}
-        // font={fontTyped}
         position={[
           -textOffset,
           -cilinderHeight / 2 - coneHeight - sphereSize,

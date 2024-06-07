@@ -6,7 +6,7 @@ import { atomGetVertices } from './vertices'
 import { atomGetEdges } from './edges'
 import { atomGetAreRestrictedOnTop } from './areRestrictedsOnTop'
 import { Vertices } from '../logic/Vertices'
-import { Edges } from '../logic/Edges'
+import { Edges, IEdgesGetData } from '../logic/Edges'
 import { Armor2D } from '../logic/Armor2D'
 import { atomGetAreDofDefinedByUser } from './areDofDefinedByUser'
 
@@ -27,6 +27,7 @@ interface IArmor2DResults {
         internalForce: number
       }
     >
+    dofPointerInDataArray: Map<number, number>
   }
   k: {
     global: number[][]
@@ -40,12 +41,14 @@ interface IArmor2DResults {
     restricted: string[][]
     unrestricted: number[][]
     solved: number[][]
+    globalSolved: number[][]
   }
   u: {
     global: (number | string)[][]
     restricted: number[][]
     unrestricted: string[][]
     solved: number[][]
+    globalSolved: number[][]
   }
 }
 
@@ -62,18 +65,32 @@ interface IResponse {
   errors: IErrorLogic[]
 
   results: IArmor2DResults
+
+  data: IEdgesGetData
 }
 
 export const atomGetResults = atom<IResponse>((get) => {
   const response: IResponse = {
     status: 'ok',
     errors: [],
+    data: {
+      vertices: new Map(),
+      edges: new Map(),
+      utils: {
+        axis: ['x', 'z'],
+        axisDOF: ['x', 'z'],
+        restrictedDOF: 0,
+        unrestrictedDOF: 0,
+        totalDOF: 0,
+      },
+    },
     results: {
       locals: new Map(),
       orderDOF: [],
       utils: {
         kGlobalHistory: [],
         internalForces: new Map(),
+        dofPointerInDataArray: new Map(),
       },
       k: {
         global: [],
@@ -87,12 +104,14 @@ export const atomGetResults = atom<IResponse>((get) => {
         restricted: [],
         unrestricted: [],
         solved: [],
+        globalSolved: [],
       },
       u: {
         global: [],
         restricted: [],
         unrestricted: [],
         solved: [],
+        globalSolved: [],
       },
     },
   }
@@ -193,6 +212,10 @@ export const atomGetResults = atom<IResponse>((get) => {
     return response
   }
 
+  response.data.vertices = edges.getData().vertices
+  response.data.edges = edges.getData().edges
+  response.data.utils = edges.getData().utils
+
   // Creando la instancia de clase Armor2D
 
   const armor2D = new Armor2D(edges.getData())
@@ -205,7 +228,8 @@ export const atomGetResults = atom<IResponse>((get) => {
     isRestrictedAbove: areRestrictedOnTop,
   })
 
-  armor2D.generateDOFPointerInDataArray()
+  response.results.utils.dofPointerInDataArray =
+    armor2D.generateDOFPointerInDataArray()
 
   const responseKGlobal = armor2D.buildGlobal()
 
@@ -238,9 +262,9 @@ export const atomGetResults = atom<IResponse>((get) => {
     response.results.u.solved = uuSolved
     response.results.f.solved = armor2D.solveForces()
 
-    console.log(armor2D.joinGlobalForces())
-    console.log(armor2D.joinGlobalDisplacements())
-    console.log(armor2D.addDisplacementForEachEdge())
+    response.results.f.globalSolved = armor2D.joinGlobalForces()
+    response.results.u.globalSolved = armor2D.joinGlobalDisplacements()
+    armor2D.addDisplacementForEachEdge() //TODO FALTA COMPLETAR
 
     response.results.utils.internalForces = armor2D.calculateInternalForces()
   } else {

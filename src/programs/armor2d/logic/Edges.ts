@@ -9,6 +9,8 @@ export interface IEdge {
   cos: number
   sin: number
   DOF: IDOF
+  from: string
+  to: string
   coordinates: {
     xi: number
     xj: number
@@ -121,6 +123,8 @@ export class Edges {
       cos,
       sin,
       DOF,
+      from,
+      to,
       coordinates: {
         xi: fromX,
         xj: toX,

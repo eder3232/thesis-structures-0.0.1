@@ -17,6 +17,8 @@ import Locals from './locals/locals'
 import OrderOfDof from './orderOfDof'
 import GlobalByStep from './globalByStep'
 import TwoDimensionalArray from './shared/twoDimensionalArray'
+import TypographyH4 from '@/components/typography/typography-h4'
+import Graph2DResults from '../graphs/graphResults/graph2DResults'
 
 const Results = () => {
   const [response] = useAtom(atomGetResults)
@@ -45,7 +47,6 @@ const Results = () => {
 
               <Locals locals={response.results.locals} />
             </div>
-
             <div className="flex flex-col gap-2">
               <TypographyH3>Orden de los grados de libertad:</TypographyH3>
 
@@ -63,7 +64,6 @@ const Results = () => {
 
               <OrderOfDof orderOfDof={response.results.orderDOF} />
             </div>
-
             {/* Matriz de rigidez global por pasos*/}
             <div className="flex flex-col gap-2">
               <TypographyH3>
@@ -76,7 +76,6 @@ const Results = () => {
                 kGlobalHistory={response.results.utils.kGlobalHistory}
               />
             </div>
-
             {/* Ecuación global de rigidez */}
             <div className="flex flex-col gap-2">
               <TypographyH3>
@@ -118,7 +117,6 @@ const Results = () => {
                 </div>
               </div>
             </div>
-
             {/* Separando la ecuación global de rigidez: */}
             <div className="flex flex-col gap-2">
               <TypographyH3>
@@ -453,6 +451,14 @@ const Results = () => {
                   <p className="text-xl font-bold">Fin de los resultados!</p>
                 </div>
               )}
+            </div>
+            {/* Graficos */}
+            <div className="flex flex-col gap-2">
+              <TypographyH3>Gráficos:</TypographyH3>
+
+              <p>Gráficos de los resultados:</p>
+
+              <Graph2DResults />
             </div>
           </div>
         )}
