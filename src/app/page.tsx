@@ -1,12 +1,4 @@
-import Image from 'next/image'
 import Link from 'next/link'
-import {
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenu,
-} from '@/components/ui/navigation-menu'
-import { Button } from '@/components/ui/button'
-import { siteConfig } from '../shared/config/site'
 
 export default function Home() {
   return (
@@ -20,10 +12,10 @@ export default function Home() {
                   Bienvenido a Eder Estructures INC
                 </h1>
                 <p className="max-w-[600px] text-gray-500 md:text-xl dark:text-gray-400 m-auto">
-                  Software para calculo de estructuras con elementos finitos, no
-                  solo calculamos, sino mostramos el proceso completo de
-                  cálculo, ayudando a los ingenieros a comprender mejor los
-                  fundamentos del análisis estructural.
+                  Software para el cálculo de estructuras mediante el método
+                  matricial de rigideces, no solo calculamos, sino mostramos el
+                  proceso completo de cálculo, ayudando a los ingenieros a
+                  comprender mejor los fundamentos del análisis estructural.
                 </p>
               </div>
               <div className="flex flex-col gap-2 md:flex-row">
@@ -44,7 +36,8 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <section className="w-full py-12 md:py-24 lg:py-32">
+
+        {/* <section className="w-full py-12 md:py-24 lg:py-32">
           <div className="container grid items-center justify-center gap-4 px-4 md:px-6">
             <div className="space-y-3">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
@@ -58,7 +51,7 @@ export default function Home() {
             <div className="grid w-full grid-cols-1 md:grid-cols-3 items-start gap-8 sm:grid-cols-2 md:gap-12 lg:max-w-5xl lg:grid-cols-3">
               <div className="grid gap-1">
                 <h3 className="text-lg font-bold">
-                  Uso super sencillo, cero configuración
+                  Fácil de usar, cero configuración.
                 </h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
                   A diferencia de hojas de cálculo excel que suelen ser
@@ -70,7 +63,7 @@ export default function Home() {
                 <h3 className="text-lg font-bold">Usalo en cualquier lugar</h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
                   Puedes usar este programa desde tu navegador, ya sea desde tu
-                  computadora, tablet o celular,
+                  computadora, tablet o celular.
                 </p>
               </div>
               <div className="grid gap-1">
@@ -84,7 +77,7 @@ export default function Home() {
             </div>
           </div>
         </section>
-        {/* <section className="w-full py-12 md:py-24 lg:py-32">
+        <section className="w-full py-12 md:py-24 lg:py-32">
           <div className="container grid items-center justify-center gap-4 px-4 md:px-6">
             <div className="space-y-3">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">

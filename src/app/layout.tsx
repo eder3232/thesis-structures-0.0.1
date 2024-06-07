@@ -1,12 +1,17 @@
-import type { Metadata } from 'next'
 import { Inter as FontSans } from 'next/font/google'
-import './globals.css'
+import type { Metadata } from 'next'
+
 import { cn } from '@/lib/utils'
-import Navbar from '@/components/shared/navbar/navbar'
+
+import JotaiProvider from '@/shared/providers/jotai-provider'
+import ThemeProvider from '@/shared/providers/theme-provider'
+
 import { siteConfig } from '@/shared/config/site'
-import { ThemeProvider } from '@/shared/providers/theme-provider'
-import { Provider } from 'jotai'
+
+import './globals.css'
+
 import Footer from '@/components/shared/footer/footer'
+import Navbar from '@/components/shared/navbar/navbar'
 
 export const fontSans = FontSans({
   subsets: ['latin'],
@@ -37,7 +42,7 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <Provider>
+        <JotaiProvider>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -50,7 +55,7 @@ export default function RootLayout({
             </div>
             <Footer />
           </ThemeProvider>
-        </Provider>
+        </JotaiProvider>
       </body>
     </html>
   )
