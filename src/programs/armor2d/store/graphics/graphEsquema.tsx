@@ -20,7 +20,10 @@ export type IReaction = {
 
 interface IResponse {
   status: IStatus
-  points: Array<ICoordinate3D>
+  points: Array<{
+    name: string
+    coordinates3d: ICoordinate3D
+  }>
   lines: [ICoordinate3D, ICoordinate3D][]
   forces: IForce[]
   reactions: IReaction[]
@@ -45,11 +48,10 @@ export const atomGetGraph = atom<IResponse>((get) => {
   const vertices = get(atomGetVertices)
   const edges = get(atomGetEdges)
 
-  response.points = vertices.map((vertex) => [
-    vertex.coordinateX,
-    vertex.coordinateZ,
-    0,
-  ])
+  response.points = vertices.map((vertex) => ({
+    name: vertex.name,
+    coordinates3d: [vertex.coordinateX, vertex.coordinateZ, 0],
+  }))
 
   response.lines = edges.map((edge) => [
     [

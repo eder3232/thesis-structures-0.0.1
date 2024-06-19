@@ -5,6 +5,8 @@ import {
   OrthographicCamera,
   PerspectiveCamera,
   Sphere,
+  Text3D,
+  useFont,
 } from '@react-three/drei'
 import { Canvas, useThree } from '@react-three/fiber'
 import { useAtom } from 'jotai'
@@ -39,7 +41,10 @@ const Graphic2D = () => {
 }
 
 interface IGraficoArmor2DProps {
-  points: Array<[number, number, number]>
+  points: Array<{
+    name: string
+    coordinates3d: [number, number, number]
+  }>
   lines: Array<Array<[number, number, number]>>
   forces: IForce[]
   reactions: IReaction[]
@@ -52,14 +57,16 @@ const Content = ({
   reactions,
 }: IGraficoArmor2DProps) => {
   const { size, viewport } = useThree()
+  const font2 = useFont('/font/Anta_Regular.json')
+
   const aspect = size.width / size.height
   // const aspect = size.width / viewport.width
   const camera = useRef<any>()
 
-  const minX = Math.min(...points.map((p) => p[0]))
-  const maxX = Math.max(...points.map((p) => p[0]))
-  const minY = Math.min(...points.map((p) => p[1]))
-  const maxY = Math.max(...points.map((p) => p[1]))
+  const minX = Math.min(...points.map((p) => p.coordinates3d[0]))
+  const maxX = Math.max(...points.map((p) => p.coordinates3d[0]))
+  const minY = Math.min(...points.map((p) => p.coordinates3d[1]))
+  const maxY = Math.max(...points.map((p) => p.coordinates3d[1]))
 
   const centerX = (minX + maxX) / 2
   const centerY = (minY + maxY) / 2
@@ -72,6 +79,8 @@ const Content = ({
     Math.min(size.width / (width * aspect), size.height / height) * 0.6
 
   const sphereSize = maxReferencialValue / 50
+
+  const textHeight = maxReferencialValue / 20
 
   // useFrame(() => {
   //   if (camera.current) {
@@ -126,9 +135,23 @@ const Content = ({
         ))}
 
         {points.map((point, index) => (
-          <Sphere key={index} position={point} args={[sphereSize]}>
-            <meshBasicMaterial color="purple" />
-          </Sphere>
+          <group key={index}>
+            <Text3D
+              size={textHeight}
+              font={font2.data}
+              position={[
+                point.coordinates3d[0] + textHeight / 2,
+                point.coordinates3d[1] + textHeight / 2,
+                0,
+              ]}
+            >
+              <meshBasicMaterial color="purple" />
+              {point.name}
+            </Text3D>
+            <Sphere position={point.coordinates3d} args={[sphereSize]}>
+              <meshBasicMaterial color="purple" />
+            </Sphere>
+          </group>
         ))}
 
         {forces.map((force, index) => (

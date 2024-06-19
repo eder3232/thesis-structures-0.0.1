@@ -1,9 +1,7 @@
 import { atom } from 'jotai'
-import { atomGetErrors } from '../errors/errors'
-import { atomGetVertices } from '../vertices'
-import { atomGetEdges } from '../edges'
-import { atomGetResults } from '../results'
 import { ICoordinate3D } from '../../interfaces/utils'
+import { atomGetErrors } from '../errors/errors'
+import { atomGetResults } from '../results'
 
 type IStatus = 'prevalidationError' | 'calculationError' | 'ok'
 
