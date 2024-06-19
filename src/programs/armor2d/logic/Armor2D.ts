@@ -585,7 +585,6 @@ export class Armor2D {
   }
 
   calculateInternalForces() {
-    // const internalForces: { [key: string]: { internalForce: number } } = {}
     const internalForces: Map<
       string,
       {

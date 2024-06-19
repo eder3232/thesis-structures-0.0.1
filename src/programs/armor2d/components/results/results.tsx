@@ -19,6 +19,7 @@ import GlobalByStep from './globalByStep'
 import TwoDimensionalArray from './shared/twoDimensionalArray'
 import TypographyH4 from '@/components/typography/typography-h4'
 import Graph2DResults from '../graphs/graphResults/graph2DResults'
+import Graph2DDeformed from '../graphs/graphDeformed/graph2DDeformed'
 
 const Results = () => {
   const [response] = useAtom(atomGetResults)
@@ -351,6 +352,7 @@ const Results = () => {
                         <TwoDimensionalArray
                           arr={response.results.u.solved}
                           name={'UuSolved'}
+                          decimals={6}
                         />
                       </div>
                     </div>
@@ -522,6 +524,8 @@ const Results = () => {
               <p>Gráficos de los resultados:</p>
 
               <Graph2DResults />
+
+              <Graph2DDeformed />
             </div>
           </div>
         )}
