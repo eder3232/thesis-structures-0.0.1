@@ -16,6 +16,13 @@ const Reactions = ({ reactions, sphereSize }: Props) => {
         } else if (reaction.axis === 'x' && reaction.value < 0) {
           directorCosines = [0, 0, 90]
         }
+
+        if (reaction.axis === 'z' && reaction.value > 0) {
+          directorCosines = [0, 0, 0]
+        } else if (reaction.axis === 'z' && reaction.value < 0) {
+          directorCosines = [0, 0, 180]
+        }
+
         return (
           <group key={index}>
             <Arrow
