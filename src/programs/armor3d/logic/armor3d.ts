@@ -1,5 +1,5 @@
-import { IEdge, IEdgesGetData } from './Edges'
-import { IVertex, IVerticesSettings, IVerticesUtils } from './Vertices'
+import { IEdge, IEdgesGetData } from './edges'
+import { IVertex, IVerticesSettings, IVerticesUtils } from './vertices'
 import { add, inv, multiply, subtract, transpose, zeros } from 'mathjs'
 import { twoDimensionalArray } from '../utils/twoDimensionalArray'
 import { tablePrinter } from '../utils/printer'

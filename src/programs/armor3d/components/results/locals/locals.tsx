@@ -6,7 +6,7 @@ import { InlineMath } from 'react-katex'
 import { Switch } from '@/components/ui/switch'
 import { Label } from '@/components/ui/label'
 import TypographyH4 from '@/components/typography/typography-h4'
-import { ILocalArrays } from '../../../logic/Armor3D'
+import { ILocalArrays } from '../../../logic/armor3D'
 import TwoDimensionalArray from './twoDimensionalArrayForLocals'
 import TwoDimensionalArrayForLocalsInGlobal from './twoDimensionalArrayForLocalsInGlobal'
 

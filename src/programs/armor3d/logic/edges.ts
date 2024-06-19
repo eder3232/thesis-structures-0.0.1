@@ -4,7 +4,7 @@ import {
   IVerticesSettings,
   ICoordinates,
   IVerticesGetData,
-} from './Vertices'
+} from './vertices'
 
 interface IDOF {
   string: {

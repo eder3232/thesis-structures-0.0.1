@@ -8,7 +8,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
-import { IOrderDOF } from '../../logic/Armor3D'
+import { IOrderDOF } from '../../logic/armor3D'
 
 interface Props {
   orderOfDof: IOrderDOF[]
