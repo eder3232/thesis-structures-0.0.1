@@ -586,7 +586,18 @@ export class Armor2D {
 
   calculateInternalForces() {
     // const internalForces: { [key: string]: { internalForce: number } } = {}
-    const internalForces: Map<string, { internalForce: number }> = new Map()
+    const internalForces: Map<
+      string,
+      {
+        internalForce: number
+        solution: {
+          local_localCoordinates: number[][]
+          transformTransposed: number[][]
+          u: number[][]
+          internalForces: number[][]
+        }
+      }
+    > = new Map()
     for (const [key, value] of this.edges) {
       // console.log(this.localArrays.get(key)!.local_globalCoordinates)
 
@@ -612,7 +623,7 @@ export class Armor2D {
       //   )
       // )
 
-      const fuerzasInternas = multiply(
+      const internalForcesMatrix = multiply(
         multiply(
           this.localArrays.get(key)!.local_localCoordinates,
           this.localArrays.get(key)!.transformTransposed
@@ -631,6 +642,13 @@ export class Armor2D {
 
       const res = {
         internalForce: value.ea_l * internalForce[0][0],
+        solution: {
+          local_localCoordinates:
+            this.localArrays.get(key)!.local_localCoordinates,
+          transformTransposed: this.localArrays.get(key)!.transformTransposed,
+          u: transpose([this.solved.edges[key].u]),
+          internalForces: transpose([internalForcesMatrix]),
+        },
       }
 
       internalForces.set(key, res)

@@ -1,9 +1,4 @@
 import { useState } from 'react'
-interface Props {
-  arr: (number | string)[][]
-  name: string
-  decimals?: number
-}
 
 import {
   Select,
@@ -16,7 +11,9 @@ import {
 import {
   Table,
   TableBody,
+  TableCaption,
   TableCell,
+  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -34,7 +31,14 @@ const decimalsArray = [
   { id: 8, name: '8' },
 ]
 
-const TwoDimensionalArray = ({ arr, name, decimals = 2 }: Props) => {
+interface Props {
+  arr: (number | string)[][]
+  name: string | React.ReactNode
+  caption?: string
+  decimals?: number
+}
+
+const TwoDimensionalArray = ({ arr, name, caption, decimals = 2 }: Props) => {
   const index = decimalsArray.findIndex((e) => e.id === decimals)
   const [selected, setSelected] = useState(decimalsArray[index])
 
@@ -106,6 +110,13 @@ const TwoDimensionalArray = ({ arr, name, decimals = 2 }: Props) => {
             </TableRow>
           ))}
         </TableBody>
+        {caption && <TableCaption>{caption}</TableCaption>}
+
+        {/* <TableFooter>
+          <TableRow>
+            <TableCell colSpan={arr[0].length + 1}>Total</TableCell>
+          </TableRow>
+        </TableFooter> */}
       </Table>
     </div>
   )

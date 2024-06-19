@@ -25,6 +25,12 @@ interface IArmor2DResults {
         // u_j: number
         // k: number
         internalForce: number
+        solution: {
+          local_localCoordinates: number[][]
+          transformTransposed: number[][]
+          u: number[][]
+          internalForces: number[][]
+        }
       }
     >
     dofPointerInDataArray: Map<number, number>

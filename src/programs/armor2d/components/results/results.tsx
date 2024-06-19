@@ -448,6 +448,69 @@ const Results = () => {
                     </div>
                   </div>
 
+                  {/* Fuerzas internas */}
+                  <div className="flex flex-col gap-2">
+                    <TypographyH3>
+                      Fuerzas internas de cada elemento:
+                    </TypographyH3>
+                    <p>
+                      Se obtienen las fuerzas internas de cada elemento con los
+                      desplazamientos obtenidos.
+                    </p>
+
+                    {Array.from(response.results.utils.internalForces).map(
+                      ([key, value]) => (
+                        <div key={key}>
+                          <TypographyH4>
+                            Fuerzas internas del elemento: {key}
+                          </TypographyH4>
+
+                          <div className="overflow-auto relative">
+                            <div className="min-w-min flex items-center">
+                              <div className="mx-4 text-2xl whitespace-nowrap">
+                                <InlineMath
+                                  math={`f_{${key}}=k_{${key}} \\times A^T \\times u_{${key}}=`}
+                                />
+                              </div>
+                              <TwoDimensionalArray
+                                arr={value.solution.local_localCoordinates}
+                                name={<InlineMath math={`k_{${key}} `} />}
+                              />
+
+                              <div className="mx-4 text-2xl whitespace-nowrap">
+                                <InlineMath math="\times" />
+                              </div>
+
+                              <TwoDimensionalArray
+                                arr={value.solution.transformTransposed}
+                                // name={`A^T_{${key}} `}
+                                name={<InlineMath math={`A^T_{${key}} `} />}
+                              />
+
+                              <div className="mx-4 text-2xl whitespace-nowrap">
+                                <InlineMath math="\times" />
+                              </div>
+
+                              <TwoDimensionalArray
+                                arr={value.solution.u}
+                                name={<InlineMath math={`u_{${key}} `} />}
+                              />
+
+                              <div className="mx-4 text-2xl whitespace-nowrap">
+                                <InlineMath math="=" />
+                              </div>
+
+                              <TwoDimensionalArray
+                                arr={value.solution.internalForces}
+                                name={<InlineMath math={`f_{${key}} `} />}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      )
+                    )}
+                  </div>
+
                   <p className="text-xl font-bold">Fin de los resultados!</p>
                 </div>
               )}

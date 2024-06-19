@@ -7,7 +7,7 @@ import { Switch } from '@/components/ui/switch'
 import { Label } from '@/components/ui/label'
 import TypographyH4 from '@/components/typography/typography-h4'
 import { ILocalArrays } from '../../../logic/Armor2D'
-import TwoDimensionalArray from './twoDimensionalArrayForLocals'
+import TwoDimensionalArray from '../shared/twoDimensionalArray'
 import TwoDimensionalArrayForLocalsInGlobal from './twoDimensionalArrayForLocalsInGlobal'
 
 interface Props {
@@ -270,7 +270,7 @@ const Locals = ({ locals }: Props) => {
                             </div>
                             <TwoDimensionalArray
                               arr={value.transformTransposed}
-                              name="A^T"
+                              name={<InlineMath math={`A^T `} />}
                               caption="Matriz de transformación transpuesta"
                             />
                           </>
