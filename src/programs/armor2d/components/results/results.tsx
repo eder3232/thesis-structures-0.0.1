@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { useAtom } from 'jotai'
 
 import 'katex/dist/katex.min.css'
@@ -532,6 +533,18 @@ const Results = () => {
                 <TypographyH4>Gráfico de deformaciones:</TypographyH4>
                 <Graph2DDeformed />
               </div>
+            </div>
+
+            {/* Imagen de despedida - eso es todo amigos */}
+
+            <div className="flex flex-col gap-2">
+              <Image
+                src="/images/eso-es-todo-amigos.png"
+                height={430}
+                width={5200}
+                alt="eso es todo amigos"
+                className="w-64"
+              />
             </div>
           </div>
         )}
