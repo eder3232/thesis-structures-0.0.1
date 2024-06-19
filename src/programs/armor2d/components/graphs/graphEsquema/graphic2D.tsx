@@ -45,7 +45,12 @@ interface IGraficoArmor2DProps {
     name: string
     coordinates3d: [number, number, number]
   }>
-  lines: Array<Array<[number, number, number]>>
+  lines: Array<{
+    name: string
+    coordinates3dName: [number, number, number]
+    coordinates3dFrom: [number, number, number]
+    coordinates3dTo: [number, number, number]
+  }>
   forces: IForce[]
   reactions: IReaction[]
 }
@@ -125,13 +130,27 @@ const Content = ({
 
       <group>
         {lines.map((line, index) => (
-          <Line
-            key={index}
-            points={line}
-            color="black"
-            lineWidth={2}
-            dashed={false}
-          />
+          <group key={index}>
+            <Text3D
+              size={textHeight}
+              font={font2.data}
+              position={[
+                line.coordinates3dName[0] + textHeight / 4,
+                line.coordinates3dName[1] + textHeight / 4,
+                0,
+              ]}
+            >
+              <meshBasicMaterial color="black" />
+              {line.name}
+            </Text3D>
+
+            <Line
+              points={[line.coordinates3dFrom, line.coordinates3dTo]}
+              color="black"
+              lineWidth={2}
+              dashed={false}
+            />
+          </group>
         ))}
 
         {points.map((point, index) => (

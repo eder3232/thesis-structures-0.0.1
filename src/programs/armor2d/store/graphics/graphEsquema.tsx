@@ -24,7 +24,12 @@ interface IResponse {
     name: string
     coordinates3d: ICoordinate3D
   }>
-  lines: [ICoordinate3D, ICoordinate3D][]
+  lines: Array<{
+    name: string
+    coordinates3dName: ICoordinate3D
+    coordinates3dFrom: ICoordinate3D
+    coordinates3dTo: ICoordinate3D
+  }>
   forces: IForce[]
   reactions: IReaction[]
 }
@@ -53,18 +58,27 @@ export const atomGetGraph = atom<IResponse>((get) => {
     coordinates3d: [vertex.coordinateX, vertex.coordinateZ, 0],
   }))
 
-  response.lines = edges.map((edge) => [
-    [
-      vertices.find((vertex) => vertex.name === edge.from)!.coordinateX,
-      vertices.find((vertex) => vertex.name === edge.from)!.coordinateZ,
-      0,
-    ],
-    [
-      vertices.find((vertex) => vertex.name === edge.to)!.coordinateX,
-      vertices.find((vertex) => vertex.name === edge.to)!.coordinateZ,
-      0,
-    ],
-  ])
+  response.lines = edges.map((edge) => {
+    const xFrom = vertices.find(
+      (vertex) => vertex.name === edge.from
+    )!.coordinateX
+    const zFrom = vertices.find(
+      (vertex) => vertex.name === edge.from
+    )!.coordinateZ
+    const xTo = vertices.find((vertex) => vertex.name === edge.to)!.coordinateX
+    const zTo = vertices.find((vertex) => vertex.name === edge.to)!.coordinateZ
+
+    const inverpValue = 0.25
+
+    const xText = xFrom + inverpValue * (xTo - xFrom)
+    const zText = zFrom + inverpValue * (zTo - zFrom)
+    return {
+      name: edge.name,
+      coordinates3dName: [xText, zText, 0],
+      coordinates3dFrom: [xFrom, zFrom, 0],
+      coordinates3dTo: [xTo, zTo, 0],
+    }
+  })
 
   const forces: IForce[] = []
   //Para los cosenos directores tenemos que:
