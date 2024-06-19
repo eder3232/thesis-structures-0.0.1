@@ -7,6 +7,7 @@ import {
   atomGetGraphResults,
 } from '../../../store/graphics/graphDeformed'
 import Lines from './lines'
+import SliderFactorScale from './sliderFactorScale'
 
 const Graph2DDeformed = () => {
   const [graph] = useAtom(atomGetGraphResults)
@@ -14,14 +15,17 @@ const Graph2DDeformed = () => {
   if (graph.status !== 'ok') return null
 
   return (
-    <div className="w-80 md:w-[500px] bg-primary/10 h-80 md:h-[500px]">
-      <Canvas>
-        <Content
-          points={graph.points}
-          lines={graph.lines}
-          reactions={graph.reactions}
-        />
-      </Canvas>
+    <div className="flex flex-col gap-4">
+      <SliderFactorScale />
+      <div className="w-80 md:w-[500px] bg-primary/10 h-80 md:h-[500px]">
+        <Canvas>
+          <Content
+            points={graph.points}
+            lines={graph.lines}
+            reactions={graph.reactions}
+          />
+        </Canvas>
+      </div>
     </div>
   )
 }
@@ -34,7 +38,6 @@ interface IGraficoArmor2DProps {
 
 const Content = ({ lines, points, reactions }: IGraficoArmor2DProps) => {
   const { size, viewport } = useThree()
-  const font2 = useFont('/font/Anta_Regular.json')
   const aspect = size.width / size.height
 
   const minX = Math.min(...points.map((p) => p[0]))

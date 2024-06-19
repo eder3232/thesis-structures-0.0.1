@@ -36,7 +36,7 @@ const calculateBarState = (
 
 const atomFactorScale = atom(100)
 
-const atomGetFactorScale = atom((get) => {
+export const atomGetFactorScale = atom((get) => {
   return get(atomFactorScale)
 })
 

@@ -518,14 +518,20 @@ const Results = () => {
               )}
             </div>
             {/* Graficos */}
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-4">
               <TypographyH3>Gráficos:</TypographyH3>
 
               <p>Gráficos de los resultados:</p>
 
-              <Graph2DResults />
+              <div className="flex flex-col gap-6">
+                <TypographyH4>Gráfico de resultados:</TypographyH4>
+                <Graph2DResults />
+              </div>
 
-              <Graph2DDeformed />
+              <div className="flex flex-col gap-6">
+                <TypographyH4>Gráfico de deformaciones:</TypographyH4>
+                <Graph2DDeformed />
+              </div>
             </div>
           </div>
         )}
